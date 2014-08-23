@@ -10,7 +10,7 @@
                 if (checked) {
                     $(obj).prop('checked', true);
                 } else {
-                    $(obj).removeProp('checked');
+                    $(obj).removeAttr('checked');
                 }
             });
 
@@ -18,7 +18,7 @@
                 if (checked) {
                     $(obj).prop('checked', true);
                 } else {
-                    $(obj).removeProp('checked');
+                    $(obj).removeAttr('checked');
                 }
             });
         });
@@ -31,7 +31,7 @@
                 if (checked) {
                     $(obj).prop('checked', true);
                 } else {
-                    $(obj).removeProp('checked');
+                    $(obj).removeAttr('checked');
                 }
             });
         });
