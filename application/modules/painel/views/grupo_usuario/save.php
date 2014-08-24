@@ -1,3 +1,13 @@
+<?php 
+
+/**
+ * @author Romário Nascimento Beckman <romabeckman@gmail.com,romario@pa.senac.br>
+ * @link https://www.linkedin.com/in/romabeckman
+ * @link https://www.facebook.com/romabeckman
+ * @link http://twitter.com/romabeckman
+ */
+
+?>
 <?php echo form_open('painel/grupo_usuario/save', 'class="form-horizontal form-validate" role="form"'); ?>
 <?php echo form_hidden('id', set_value('id', isset($oGrupoUsuario) ? $oGrupoUsuario->id : '')); ?>
 

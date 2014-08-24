@@ -5167,5 +5167,6 @@ pre {
 /* Localized */
 
 td.opcoes {
-    width: 210px;
+    text-align: right;
+    white-space: nowrap;
 }

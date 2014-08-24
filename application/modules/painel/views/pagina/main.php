@@ -1,4 +1,4 @@
-<a class="btn btn-warning" href="<?php echo base_url(); ?>painel/pagina/adicionar"><i class="icon-folder-open"></i> Adicionar</a><hr />
+<a class="btn btn-warning" href="<?php echo base_url(); ?>painel/pagina/adicionar"><i class="icon-plus-sign"></i> Adicionar</a><hr />
 
 <table cellspacing="0" cellpadding="0" class="table table-striped table-advance table-hover">
     <thead>
@@ -9,7 +9,7 @@
             <th>Url</th>
             <th>Ativo</th>
             <th>Data de cadastro</th>
-            <th>Opções</th>
+            <th>&ensp;</th>
         </tr>
     </thead>
     <tbody>

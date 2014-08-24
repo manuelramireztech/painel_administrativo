@@ -1,9 +1,19 @@
-<a class="btn btn-warning" href="<?php echo base_url(); ?>painel/grupo_usuario/adicionar"><i class="icon-folder-open"></i> Adicionar</a><hr />
+<?php 
+
+/**
+ * @author Romário Nascimento Beckman <romabeckman@gmail.com,romario@pa.senac.br>
+ * @link https://www.linkedin.com/in/romabeckman
+ * @link https://www.facebook.com/romabeckman
+ * @link http://twitter.com/romabeckman
+ */
+
+?>
+<a class="btn btn-warning" href="<?php echo base_url(); ?>painel/grupo_usuario/adicionar"><i class="icon-plus-sign"></i> Adicionar</a><hr />
 <table cellspacing="0" cellpadding="0" class="table table-striped table-advance table-hover">
     <thead>
         <tr>
             <th>Nome</th>
-            <th>Opções</th>
+            <th>&ensp;</th>
         </tr>
     </thead>
     <tbody>

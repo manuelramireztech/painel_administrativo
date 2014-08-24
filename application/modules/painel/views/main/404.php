@@ -1,47 +1,96 @@
+<?php 
+
+/**
+ * @author Romário Nascimento Beckman <romabeckman@gmail.com,romario@pa.senac.br>
+ * @link https://www.linkedin.com/in/romabeckman
+ * @link https://www.facebook.com/romabeckman
+ * @link http://twitter.com/romabeckman
+ */
+
+?>
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Mosaddek">
-    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-    <link rel="shortcut icon" href="img/favicon.png">
+<html>
+  <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Página não encontrada - 404</title>
 
-    <title>404</title>
+        <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/bootstrap/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet" type="text/css" />
+        <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/theme-colors.css" media="all" rel="stylesheet" type="text/css" />
+        <!--[if lt IE 9]>
+          <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
+          <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
+        <![endif]-->
 
-    <!-- Bootstrap core CSS -->
-    <link href="<?php echo base_url(); ?>resources/painel/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>resources/painel/css/bootstrap-reset.css" rel="stylesheet">
-    <!--external css-->
-    <link href="<?php echo base_url(); ?>resources/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    <!-- Custom styles for this template -->
-    <link href="<?php echo base_url(); ?>resources/painel/css/style.css" rel="stylesheet">
-    <link href="<?php echo base_url(); ?>resources/painel/css/style-responsive.css" rel="stylesheet" />
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+        <!--[if lt IE 9]>
+          <script src="js/html5shiv.js"></script>
+          <script src="js/respond.min.js"></script>
+        <![endif]-->
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
-    <!--[if lt IE 9]>
-    <script src="<?php echo base_url(); ?>resources/painel/js/html5shiv.js"></script>
-    <script src="<?php echo base_url(); ?>resources/painel/js/respond.min.js"></script>
-    <![endif]-->
-</head>
-
-
-
-
-  <body class="body-404">
-
-    <div class="container">
-
-      <section class="error-wrapper">
-          <i class="icon-404"></i>
-          <h1>404</h1>
-          <h2>Page not found</h2>
-      </section>
-
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/jquery/jquery.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+        <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/plugins/jquery-ui/jquery-ui.min.css" media="all" rel="stylesheet" type="text/css" />
+    </head>
+  <body class='contrast-fb error contrast-background'>
+    <div class='middle-container'>
+      <div class='middle-row'>
+        <div class='middle-wrapper'>
+          <div class='error-container-header'>
+            <div class='container'>
+              <div class='row'>
+                <div class='col-sm-12'>
+                  <div class='text-center'>
+                    <i class='icon-question-sign'></i>
+                    404
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='error-container'>
+            <div class='container'>
+              <div class='row'>
+                <div class='col-sm-4 col-sm-offset-4'>
+                  <h4 class='text-center title'>Ooops! Página acessada não foi encontrada ou não existe!</h4>
+                  <div class='text-center'>
+                    <a class='btn btn-md btn-ablock' href='<?php echo base_url() ?>'>
+                      <i class='icon-chevron-left'></i>
+                      Voltar
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='error-container-footer'>
+            <div class='container'>
+              <div class='row'>
+                <div class='col-sm-12'>
+                  <div class='text-center'>
+                    <?php echo NOME_CLIENTE ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/jquery/jquery.mobile.custom.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/jquery/jquery-migrate.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/jquery/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/jquery_ui_touch_punch/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/modernizr/modernizr.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/retina/retina.js" type="text/javascript"></script>
 
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/jquery-ui/jquery.ui.datepicker-pt-BR.min.js" type="text/javascript"></script>
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/theme.js" type="text/javascript"></script>
+    
+    <!-- / END - page related files and scripts [optional] -->
   </body>
 </html>
 
