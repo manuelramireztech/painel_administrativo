@@ -606,7 +606,8 @@ var notify = false;
                 var $form = $(this);
 
                 if ($form.length) {
-                    $form.prepend($("<div>").addClass("errors alert alert-danger text-center").html("Por favor verifique o(s) campo(s) em destaque abaixo:").hide());
+                    if ($form.find("div.errors").length == 0)
+                        $form.prepend($("<div>").addClass("errors alert alert-danger text-center").html("Por favor verifique o(s) campo(s) em destaque abaixo:").hide());
 
                     var api = $form.validate({
                         errorContainer: "div.errors",
@@ -625,23 +626,21 @@ var notify = false;
                                 $("div.errors", api).hide();
                         },
                         highlight: function(element, errorClass) {
-                            var id = element.name;
-                            id = id.split("[");
-                            id = id[0];
-
+                            var label = $(element).parents(".form-group:eq(0)").find("label");
                             $(element).parent().removeClass('has-success').addClass('has-error');
-                            $("label[for='" + id + "']", $form).css({
+                            label.css({
                                 "color": "#FF0000"
                             });
                         },
                         unhighlight: function(element, errorClass) {
-                            var id = element.name;
-                            id = id.split("[");
-                            id = id[0];
+                            var label = $(element).parents(".form-group:eq(0)").find("label");
 
                             $(element).parent().removeClass('has-error').addClass('has-success');
-                            if ($("label[for='" + id + "']", $form).css("color") == 'rgb(255, 0, 0)') {
-                                $("label[for='" + id + "']", $form).css("color", "#00AA00");
+                            $(element).parents(".form-group:eq(0)").find("label").css({
+                                "color": "#FF0000"
+                            });
+                            if (label.css("color") == 'rgb(255, 0, 0)') {
+                                label.css("color", "#00AA00");
                             }
                         },
                         success: function() {
