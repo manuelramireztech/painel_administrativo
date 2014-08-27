@@ -8,7 +8,7 @@
  */
 
 
-class imagem_model extends abstract_model {
+class imagem_model extends MY_Model {
 
     public $vConfig = array();
 

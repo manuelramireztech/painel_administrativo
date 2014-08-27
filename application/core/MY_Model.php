@@ -1,4 +1,4 @@
-<?php
+<?php (defined('BASEPATH')) OR exit('No direct script access allowed');
 
 /**
  * @author Romário Nascimento Beckman <romabeckman@gmail.com,romario@pa.senac.br>
@@ -8,7 +8,7 @@
  */
 
 
-class abstract_model extends CI_Model {
+class MY_Model extends CI_Model {
 
     protected $sTable, $bDeletado = FALSE;
 

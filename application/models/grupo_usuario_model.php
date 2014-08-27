@@ -8,7 +8,7 @@
  */
 
 
-class grupo_usuario_model extends abstract_model {
+class grupo_usuario_model extends MY_Model {
 
     function __construct() {
         parent::__construct();

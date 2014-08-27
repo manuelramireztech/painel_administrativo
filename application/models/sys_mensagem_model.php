@@ -8,7 +8,7 @@
  */
 
 
-class sys_mensagem_model extends abstract_model {
+class sys_mensagem_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
