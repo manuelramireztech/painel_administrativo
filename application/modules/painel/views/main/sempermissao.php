@@ -43,7 +43,7 @@
                 <div class='col-sm-12'>
                   <div class='text-center'>
                     <i class='icon-exclamation-sign'></i>
-                    Sem Permissão
+                     Ops!
                   </div>
                 </div>
               </div>

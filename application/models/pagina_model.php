@@ -8,7 +8,7 @@
  */
 
 
-class pagina_model extends abstract_model {
+class pagina_model extends MY_Model {
 
     function __construct() {
         parent::__construct();

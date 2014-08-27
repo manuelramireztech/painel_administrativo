@@ -18,8 +18,6 @@ class auth {
 
     public function __construct() {
         $this->ci = &get_instance();
-        $this->ci->load->model('abstract_model');
-        $this->ci->load->model('sys_mensagem_model');
         $this->ci->load->model('grupo_usuario_model');
         $this->ci->load->model('metodo_model');
 

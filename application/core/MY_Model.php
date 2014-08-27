@@ -8,7 +8,7 @@
  */
 
 
-class abstract_model extends CI_Model {
+class MY_Model extends CI_Model {
 
     protected $sTable, $bDeletado = FALSE;
 
