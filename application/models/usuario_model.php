@@ -18,9 +18,11 @@ class usuario_model extends MY_Model {
 
     function getLogin($sLogin, $sSenha) {
         $oRow = $this->db
-                ->get_where($this->sTable, array('login' => $sLogin, 'deletado' => 0, 'ativo' => 1))
+                ->select("{$this->sTable}.*")
+                ->join("usu_grupo_usuario", "usu_grupo_usuario.id = {$this->sTable}.id_grupo_usuario")
+                ->get_where($this->sTable, array('login' => $sLogin, 'usu_grupo_usuario.deletado' => 0, "{$this->sTable}.deletado" => 0, 'ativo' => 1))
                 ->row(0);
-
+                
         if (!empty($oRow)) {
             if ($this->encrypt->decode($oRow->senha) == $sSenha) {
                 return $oRow;

@@ -15,9 +15,9 @@ class MY_Controller extends MX_Controller {
         if (!isset($vars['title']))
             $vars['title'] = NOME_CLIENTE;
 
-        $vars['vPainelPermissao'] = $this->auth->vPermissaoPainel;
         $vars['vPainel'] = $this->session->userdata('painel');
         $vars['bPainelNav'] = $this->session->userdata('painel_nav');
+        $vars['vPainelPermissao'] = $this->metodo_model->getPermissao($vars['vPainel']['id_grupo_usuario']);
         $this->load->view($view, $vars, $return);
     }
 

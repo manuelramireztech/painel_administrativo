@@ -91,7 +91,8 @@ class metodo_model extends MY_Model {
     function validarPermissao($nIdGrupoUsuario, $nIdMetodo) {
         return $this->db
                         ->select("COUNT(*) AS existe")
-                        ->where(array('id_grupo_usuario' => $nIdGrupoUsuario, 'id_metodo' => $nIdMetodo))
+                        ->where(array('id_grupo_usuario' => $nIdGrupoUsuario, 'id_metodo' => $nIdMetodo, 'deletado' => 0))
+                        ->join('usu_grupo_usuario', "usu_grupo_usuario.id = usu_permissoes.id_grupo_usuario")
                         ->get("usu_permissoes")
                         ->row('existe');
     }
