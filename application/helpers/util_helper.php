@@ -143,7 +143,7 @@ class Util {
         if (!empty($sDataHora)) {
             $sDataHora = explode(" ", trim($sDataHora));
             $sDataHora[0] = self::converteDmaParaAmd($sDataHora[0], "-", $bValidate);
-            
+
             return !empty($sDataHora[0]) ? trim(implode(" ", $sDataHora)) : NULL;
         } else {
             return NULL;
@@ -376,6 +376,24 @@ class Util {
 
     static function removeHtml($sText) {
         return htmlspecialchars(strip_tags($sText), ENT_QUOTES);
+    }
+
+    static function trataNome($sNome) {
+        $sNome = str_ireplace('_', ' ', $sNome);
+        $sNome = ucwords($sNome);
+        
+        $sNome = str_ireplace('cao', 'ção', $sNome);
+        $sNome = str_ireplace('icia', 'ícia', $sNome);
+        $sNome = str_ireplace('ssao', 'ssão', $sNome);
+        $sNome = str_ireplace('aria', 'ária', $sNome);
+        $sNome = str_ireplace('ario', 'ário', $sNome);
+        $sNome = str_ireplace('encia', 'ência', $sNome);
+        $sNome = str_ireplace('Numero', 'Número', $sNome);
+        $sNome = str_ireplace('Endereco', 'endereço', $sNome);
+        $sNome = str_ireplace('images', 'imagens', $sNome);
+        $sNome = str_ireplace('cien', 'ciên', $sNome);
+        $sNome = str_ireplace('metodos', 'métodos', $sNome);
+        return $sNome;
     }
 
 }

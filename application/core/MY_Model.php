@@ -140,7 +140,7 @@ class MY_Model extends CI_Model {
             if (!empty($dados)) {
                 foreach ($dados as $sIndice => $sDados) {
                     $sDados = Util::substr($sDados, 200);
-                    $sDescricao .= "$sIndice: $sDados\n";
+                    $sDescricao .= Util::trataNome($sIndice) . ": $sDados\n";
                 }
 
                 if (!empty($sDescricao)) {
