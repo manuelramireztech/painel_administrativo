@@ -1,4 +1,6 @@
-<?php (defined('BASEPATH')) OR exit('No direct script access allowed');
+<?php
+
+(defined('BASEPATH')) OR exit('No direct script access allowed');
 
 /**
  * @author Romário Nascimento Beckman <romabeckman@gmail.com,romario@pa.senac.br>
@@ -6,8 +8,6 @@
  * @link https://www.facebook.com/romabeckman
  * @link http://twitter.com/romabeckman
  */
-
-
 class MY_Model extends CI_Model {
 
     protected $sTable, $bDeletado = FALSE;
@@ -100,7 +100,14 @@ class MY_Model extends CI_Model {
 
     function update($vDados, $nId, $sCampo = 'id') {
         try {
-            $this->saveLog("Alterar", $vDados);
+            $vRow = $this->db->where(array($sCampo => $nId))->get($this->sTable)->row_array(0);
+            $vLog = array();
+            foreach ($vDados as $sIndice => $sValor) {
+                if (isset($vRow[$sIndice]))
+                    $vLog[$sIndice] = "{$vRow[$sIndice]} => {$sValor}";
+            }
+
+            $this->saveLog("Alterar", $vLog);
             return $this->db->update($this->sTable, $vDados, array($sCampo => $nId));
         } catch (Exception $exc) {
             return false;
@@ -149,7 +156,7 @@ class MY_Model extends CI_Model {
                         'acesso' => $this->router->fetch_module() . "/" . $this->router->class . "/" . $this->router->method,
                         'descricao' => $sDescricao,
                         'id_usuario' => isset($vPainel['id']) ? $vPainel['id'] : NULL,
-                        'ip' => $_SERVER['REMOTE_ADDR'],
+                        'ip' => $this->input->ip_address(),
                     );
 
                     $this->db->insert('usu_log', $vLog);
