@@ -11,7 +11,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class pagina extends MY_Controller {
+class pagina extends MY_Controller implements Crud_Painel {
 
     function __construct() {
         parent::__construct();

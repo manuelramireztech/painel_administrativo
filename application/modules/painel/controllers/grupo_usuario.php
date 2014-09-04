@@ -11,7 +11,7 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class grupo_usuario extends MY_Controller {
+class grupo_usuario extends MY_Controller implements Crud_Painel {
 
     function __construct() {
         parent::__construct();
