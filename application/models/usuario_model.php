@@ -13,14 +13,14 @@ class usuario_model extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->sTable = 'usu_usuario';
-        $this->bDeletado = TRUE;
+        $this->setDeletado();
     }
 
     function getLogin($sLogin, $sSenha) {
         $oRow = $this->db
-                ->select("{$this->sTable}.*")
-                ->join("usu_grupo_usuario", "usu_grupo_usuario.id = {$this->sTable}.id_grupo_usuario")
-                ->get_where($this->sTable, array('login' => $sLogin, 'usu_grupo_usuario.deletado' => 0, "{$this->sTable}.deletado" => 0, 'ativo' => 1))
+                ->select($this->sTable . ".*")
+                ->join("usu_grupo_usuario", "usu_grupo_usuario.id = " . $this->sTable . ".id_grupo_usuario")
+                ->get_where($this->sTable, array('login' => $sLogin, 'usu_grupo_usuario.deletado' => 0, "" . $this->sTable . ".deletado" => 0, 'ativo' => 1))
                 ->row(0);
                 
         if (!empty($oRow)) {
@@ -43,7 +43,7 @@ class usuario_model extends MY_Model {
 
         $result = $this->db
                 ->select('*')
-                ->select("(SELECT nome FROM usu_grupo_usuario WHERE {$this->sTable}.id_grupo_usuario = usu_grupo_usuario.id) AS grupo_usuario")
+                ->select("(SELECT nome FROM usu_grupo_usuario WHERE " . $this->sTable . ".id_grupo_usuario = usu_grupo_usuario.id) AS grupo_usuario")
                 ->order_by('id DESC')
                 ->limit($nPerPage, $nPaginas)
                 ->get_where($this->sTable, $vDados)

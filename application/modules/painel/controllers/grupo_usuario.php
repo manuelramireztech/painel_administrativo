@@ -24,14 +24,14 @@ class grupo_usuario extends MY_Controller {
         $vPaginate = $this->grupo_usuario_model->getPaginate(base_url() . "painel/grupo_usuario/index/?");
         $data['paginacao'] = $vPaginate['links'];
         $data['voGrupoUsuario'] = $vPaginate['data'];
-        self::loadTemplatePainel(NULL, $data);
+        $this->loadTemplatePainel(NULL, $data);
     }
 
     function adicionar() {
         $data['migalha'] = array('painel/grupo_usuario' => 'Grupo Usuário');
         $data['conteudo'] = "grupo_usuario/save";
         $data['title'] = "Adicionar Grupo Usuário";
-        self::loadTemplatePainel(NULL, $data);
+        $this->loadTemplatePainel(NULL, $data);
     }
 
     function alterar() {
@@ -45,7 +45,7 @@ class grupo_usuario extends MY_Controller {
             $data['migalha'] = array('painel/grupo_usuario' => 'Grupo Usuário');
             $data['conteudo'] = "grupo_usuario/save";
             $data['title'] = "Alterar Grupo Usuário";
-            self::loadTemplatePainel(NULL, $data);
+            $this->loadTemplatePainel(NULL, $data);
         }
     }
 

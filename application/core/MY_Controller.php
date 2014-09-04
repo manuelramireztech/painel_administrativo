@@ -1,6 +1,15 @@
 <?php
 
+/**
+ * @author Romário Nascimento Beckman <romabeckman@gmail.com,romario@pa.senac.br>
+ * @link https://www.linkedin.com/in/romabeckman
+ * @link https://www.facebook.com/romabeckman
+ * @link http://twitter.com/romabeckman
+ */
+
 (defined('BASEPATH')) OR exit('No direct script access allowed');
+
+require_once APPPATH . 'interfaces/Crud_Painel.php';
 
 class MY_Controller extends MX_Controller {
 

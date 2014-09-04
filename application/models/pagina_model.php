@@ -6,14 +6,12 @@
  * @link https://www.facebook.com/romabeckman
  * @link http://twitter.com/romabeckman
  */
-
-
 class pagina_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
         $this->sTable = 'cms_pagina';
-        $this->bDeletado = TRUE;
+        $this->setDeletado();
     }
 
     function getPaginate($sUrl, $vDados = array()) {
@@ -28,7 +26,7 @@ class pagina_model extends MY_Model {
 
         $result = $this->db
                 ->select('*')
-                ->select("(SELECT p.nome FROM cms_pagina AS p WHERE {$this->sTable}.id_pagina = p.id) AS pagina")
+                ->select("(SELECT p.nome FROM cms_pagina AS p WHERE " . $this->sTable . ".id_pagina = p.id) AS pagina")
                 ->order_by('id', 'DESC')
                 ->limit($nPerPage, $nPaginas)
                 ->where($vDados)

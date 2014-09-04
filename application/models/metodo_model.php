@@ -61,7 +61,7 @@ class metodo_model extends MY_Model {
         return $this->db
                         ->select("COUNT(*) AS existe")
                         ->were(array('usu_permissoes.id_grupo_usuario' => $nIdGrupoUsuario, 'usu_metodo.apelido' => $sApelido))
-                        ->join('usu_permissoes', "usu_permissoes.id_metodo = {$this->sTable}.id")
+                        ->join('usu_permissoes', "usu_permissoes.id_metodo = " . $this->sTable . ".id")
                         ->get($this->sTable)
                         ->row('existe');
     }

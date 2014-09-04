@@ -22,7 +22,7 @@ class configuracao extends MY_Controller {
         $data['conteudo'] = "configuracao/main";
         $data['title'] = "Configuração";
         $data['vConfiguracao'] = $this->configuracao_model->getAllSelect(array(), 'valor', 'nome');
-        self::loadTemplatePainel(NULL, $data);
+        $this->loadTemplatePainel(NULL, $data);
     }
 
     function save() {

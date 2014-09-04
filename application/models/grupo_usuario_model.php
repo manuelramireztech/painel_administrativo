@@ -13,7 +13,7 @@ class grupo_usuario_model extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->sTable = 'usu_grupo_usuario';
-        $this->bDeletado = TRUE;
+        $this->setDeletado();
     }
 
     function getPaginate($sUrl, $vDados = array()) {

@@ -256,6 +256,9 @@ class Util {
     }
 
     static function gerarSenha($tamanho = 6, $maiuscula = true, $minuscula = true, $numeros = true, $codigos = false) {
+        if ($tamanho <= 0)
+            return '';
+
         $maius = "ABCDEFGHIJKLMNOPQRSTUWXYZ";
         $minus = "abcdefghijklmnopqrstuwxyz";
         $numer = "0123456789";
@@ -381,7 +384,7 @@ class Util {
     static function trataNome($sNome) {
         $sNome = str_ireplace('_', ' ', $sNome);
         $sNome = ucwords($sNome);
-        
+
         $sNome = str_ireplace('cao', 'ção', $sNome);
         $sNome = str_ireplace('icia', 'ícia', $sNome);
         $sNome = str_ireplace('ssao', 'ssão', $sNome);

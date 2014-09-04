@@ -6,8 +6,6 @@
  * @link https://www.facebook.com/romabeckman
  * @link http://twitter.com/romabeckman
  */
-
-
 class configuracao_model extends MY_Model {
 
     function __construct() {

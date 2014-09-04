@@ -25,7 +25,7 @@ class main extends MY_Controller {
         } else {
             $data['conteudo'] = "main/main";
             $data['title'] = "Bem vindo!";
-            self::loadTemplatePainel(NULL, $data);
+            $this->loadTemplatePainel(NULL, $data);
         }
     }
 

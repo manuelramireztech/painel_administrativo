@@ -25,7 +25,7 @@ class log_model extends MY_Model {
 
         $result = $this->db
                 ->select('*')
-                ->select("(SELECT nome FROM usu_usuario WHERE {$this->sTable}.id_usuario = usu_usuario.id) AS usuario")
+                ->select("(SELECT nome FROM usu_usuario WHERE " . $this->sTable . ".id_usuario = usu_usuario.id) AS usuario")
                 ->order_by('id DESC')
                 ->limit($nPerPage, $nPaginas)
                 ->get_where($this->sTable, $vDados)

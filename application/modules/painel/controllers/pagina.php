@@ -25,7 +25,7 @@ class pagina extends MY_Controller {
         $vPaginate = $this->pagina_model->getPaginate(base_url() . "painel/pagina/index/?");
         $data['paginacao'] = $vPaginate['links'];
         $data['voPagina'] = $vPaginate['data'];
-        self::loadTemplatePainel(NULL, $data);
+        $this->loadTemplatePainel(NULL, $data);
     }
 
     function adicionar() {
@@ -33,7 +33,7 @@ class pagina extends MY_Controller {
         $data['migalha'] = array('painel/pagina' => 'Página');
         $data['conteudo'] = "pagina/save";
         $data['title'] = "Adicionar Página";
-        self::loadTemplatePainel(NULL, $data);
+        $this->loadTemplatePainel(NULL, $data);
     }
 
     function alterar() {
@@ -48,7 +48,7 @@ class pagina extends MY_Controller {
             $data['migalha'] = array('painel/pagina' => 'Página');
             $data['conteudo'] = "pagina/save";
             $data['title'] = "Alterar Página";
-            self::loadTemplatePainel(NULL, $data);
+            $this->loadTemplatePainel(NULL, $data);
         }
     }
 

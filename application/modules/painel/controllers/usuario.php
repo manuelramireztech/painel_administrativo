@@ -6,12 +6,10 @@
  * @link https://www.facebook.com/romabeckman
  * @link http://twitter.com/romabeckman
  */
-
-
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class usuario extends MY_Controller {
+class usuario extends MY_Controller implements Crud_Painel {
 
     function __construct() {
         parent::__construct();
@@ -25,7 +23,7 @@ class usuario extends MY_Controller {
         $vPaginate = $this->usuario_model->getPaginate(base_url() . "painel/usuario/index/?");
         $data['paginacao'] = $vPaginate['links'];
         $data['voUsuario'] = $vPaginate['data'];
-        self::loadTemplatePainel(NULL, $data);
+        $this->loadTemplatePainel(NULL, $data);
     }
 
     function adicionar() {
@@ -33,7 +31,7 @@ class usuario extends MY_Controller {
         $data['grupo_usuario'] = array('' => 'Selecione') + $this->grupo_usuario_model->getAllSelect();
         $data['conteudo'] = "usuario/save";
         $data['title'] = "Adicionar Usuário";
-        self::loadTemplatePainel(NULL, $data);
+        $this->loadTemplatePainel(NULL, $data);
     }
 
     function alterar() {
@@ -48,7 +46,7 @@ class usuario extends MY_Controller {
             $data['grupo_usuario'] = array('' => 'Selecione') + $this->grupo_usuario_model->getAllSelect();
             $data['conteudo'] = "usuario/save";
             $data['title'] = "Alterar Usuário";
-            self::loadTemplatePainel(NULL, $data);
+            $this->loadTemplatePainel(NULL, $data);
         }
     }
 
@@ -92,7 +90,7 @@ class usuario extends MY_Controller {
                 }
             } else {
                 $vReg['senha'] = $this->encrypt->encode($vDados['senha']);
-                
+
                 if ($this->usuario_model->insert($vReg)) {
                     $this->sys_mensagem_model->setFlashData(9);
                 } else {
@@ -110,7 +108,7 @@ class usuario extends MY_Controller {
         $data['usuario'] = $this->usuario_model->get($vPainel['id']);
         $data['conteudo'] = "usuario/meus_dados";
         $data['title'] = "Alterar meus dados de acesso";
-        self::loadTemplatePainel(NULL, $data);
+        $this->loadTemplatePainel(NULL, $data);
     }
 
     function save_meus_dados() {

@@ -30,7 +30,7 @@ class permissoes extends MY_Controller {
             $data['conteudo'] = "permissoes/main";
             $data['title'] = "Permissões";
             $data['voMetodo'] = $this->metodo_model->getAllComPermissao($nIdGrupoUsuario);
-            self::loadTemplatePainel(NULL, $data);
+            $this->loadTemplatePainel(NULL, $data);
         }
     }
 
