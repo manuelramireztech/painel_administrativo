@@ -92,6 +92,8 @@ class usuario extends MY_Controller implements Crud_Painel {
                 $vReg['senha'] = $this->encrypt->encode($vDados['senha']);
 
                 if ($this->usuario_model->insert($vReg)) {
+                    
+                    
                     $this->sys_mensagem_model->setFlashData(9);
                 } else {
                     $this->sys_mensagem_model->setFlashData(2);

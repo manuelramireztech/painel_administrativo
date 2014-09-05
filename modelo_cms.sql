@@ -1,24 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.12
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: 11-Ago-2014 às 13:20
--- Versão do servidor: 5.6.16
--- PHP Version: 5.5.11
+-- Servidor: localhost
+-- Tempo de Geração: Set 04, 2014 as 09:36 PM
+-- Versão do Servidor: 5.1.44
+-- Versão do PHP: 5.3.1
 
 SET FOREIGN_KEY_CHECKS=0;
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Database: `modelo_cms`
+-- Banco de Dados: `modelo_cms`
 --
 
 -- --------------------------------------------------------
@@ -41,6 +34,11 @@ CREATE TABLE IF NOT EXISTS `cms_pagina` (
   PRIMARY KEY (`id`),
   KEY `fk_cms_pagina_cms_pagina1_idx` (`id_pagina`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Extraindo dados da tabela `cms_pagina`
+--
+
 
 -- --------------------------------------------------------
 
@@ -66,8 +64,8 @@ INSERT INTO `sys_configuracao` (`nome`, `valor`) VALUES
 ('EMAIL_PORT', '587'),
 ('EMAIL_SMTP', ''),
 ('EMAIL_USERNAME', ''),
-('PAGSEGURO_EMAIL', ''),
-('PAGSEGURO_TOKEN', '');
+('PAGSEGURO_EMAIL', NULL),
+('PAGSEGURO_TOKEN', NULL);
 
 -- --------------------------------------------------------
 
@@ -118,14 +116,15 @@ CREATE TABLE IF NOT EXISTS `usu_grupo_usuario` (
   `nome` varchar(45) NOT NULL DEFAULT '',
   `deletado` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Extraindo dados da tabela `usu_grupo_usuario`
 --
 
 INSERT INTO `usu_grupo_usuario` (`id`, `nome`, `deletado`) VALUES
-(1, 'Administrador', 0);
+(1, 'Administrador', 0),
+(2, 'Comum', 0);
 
 -- --------------------------------------------------------
 
@@ -145,6 +144,11 @@ CREATE TABLE IF NOT EXISTS `usu_log` (
   PRIMARY KEY (`id`),
   KEY `id_usuario` (`id_usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Extraindo dados da tabela `usu_log`
+--
+
 
 -- --------------------------------------------------------
 
@@ -170,21 +174,20 @@ CREATE TABLE IF NOT EXISTS `usu_metodo` (
 --
 
 INSERT INTO `usu_metodo` (`id`, `modulo`, `classe`, `metodo`, `area`, `apelido`, `privado`, `default`) VALUES
-(1, 'painel', 'main', 'index', 'Painel', 'Visualizar', 1, 1),
-(2, 'painel', 'main', 'login', '', 'painel/main/login', 0, 0),
-(3, 'painel', 'main', 'dologin', '', 'painel/main/dologin', 0, 0),
-(4, 'painel', 'main', 'page_not_found', '', 'painel/main/page_not_found', 0, 0),
-(7, 'painel', 'main', 'logout', '', 'painel/main/logout', 0, 0),
-(8, 'painel', 'main', 'sempermissao', '', 'painel/main/sempermissao', 0, 0),
+(1, 'painel', 'main', 'index', 'Home', 'Visualizar', 1, 1),
+(2, 'painel', 'main', 'login', '', '', 0, 0),
+(3, 'painel', 'main', 'dologin', '', '', 0, 0),
+(4, 'painel', 'main', 'page_not_found', '', '', 0, 0),
+(7, 'painel', 'main', 'logout', '', '', 0, 0),
+(8, 'painel', 'main', 'sempermissao', '', '', 0, 0),
 (9, 'painel', 'log', 'index', 'Log', 'Visualizar', 1, 0),
 (11, 'painel', 'usuario', 'index', 'Usuário', 'Visualizar', 1, 0),
 (14, 'painel', 'usuario', 'alterar', 'Usuário', 'Alterar', 1, 0),
 (16, 'painel', 'usuario', 'remover', 'Usuário', 'Remover', 1, 0),
 (17, 'painel', 'usuario', 'adicionar', 'Usuário', 'Adicionar', 1, 0),
 (18, 'painel', 'usuario', 'save', 'Usuário', 'Salvar', 1, 0),
-(19, 'painel', 'main', 'meus_dados', 'Painel', 'Meus Dados', 1, 1),
-(20, 'painel', 'usuario', 'meus_dados', 'Usuário', 'Meus Dados', 1, 0),
-(21, 'painel', 'usuario', 'save_meus_dados', 'Usuário', 'Salvar Meus Dados', 1, 0),
+(20, 'painel', 'usuario', 'meus_dados', 'Usuário', 'Meus Dados', 1, 1),
+(21, 'painel', 'usuario', 'save_meus_dados', 'Usuário', 'Salvar Meus Dados', 1, 1),
 (27, 'painel', 'pagina', 'index', 'Página', 'Visualizar', 1, 0),
 (28, 'painel', 'pagina', 'adicionar', 'Página', 'Adicionar', 1, 0),
 (48, 'painel', 'grupo_usuario', 'index', 'Grupo de Usuário', 'Visualizar', 1, 0),
@@ -199,9 +202,9 @@ INSERT INTO `usu_metodo` (`id`, `modulo`, `classe`, `metodo`, `area`, `apelido`,
 (57, 'painel', 'pagina', 'save', 'Página', 'Salvar', 1, 0),
 (58, 'painel', 'pagina', 'alterar', 'Página', 'Alterar', 1, 0),
 (59, 'painel', 'pagina', 'remover', 'Página', 'Remover', 1, 0),
-(60, 'painel', 'main', 'recupera_senha', '', 'painel/main/recupera_senha', 0, 0),
-(67, 'painel', 'main', '404', '', 'painel/main/404', 0, 0),
-(71, 'painel', 'main', 'painel_nav', '', 'painel/main/painel_nav', 1, 1);
+(60, 'painel', 'main', 'recupera_senha', '', '', 0, 0),
+(67, 'painel', 'main', '404', '', '', 0, 0),
+(71, 'painel', 'main', 'painel_nav', '', '', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -223,15 +226,17 @@ CREATE TABLE IF NOT EXISTS `usu_permissoes` (
 
 INSERT INTO `usu_permissoes` (`id_metodo`, `id_grupo_usuario`) VALUES
 (1, 1),
+(1, 2),
 (9, 1),
 (11, 1),
 (14, 1),
 (16, 1),
 (17, 1),
 (18, 1),
-(19, 1),
 (20, 1),
+(20, 2),
 (21, 1),
+(21, 2),
 (27, 1),
 (28, 1),
 (48, 1),
@@ -245,8 +250,7 @@ INSERT INTO `usu_permissoes` (`id_metodo`, `id_grupo_usuario`) VALUES
 (56, 1),
 (57, 1),
 (58, 1),
-(59, 1),
-(71, 1);
+(59, 1);
 
 -- --------------------------------------------------------
 
@@ -274,38 +278,34 @@ CREATE TABLE IF NOT EXISTS `usu_usuario` (
 --
 
 INSERT INTO `usu_usuario` (`id`, `id_grupo_usuario`, `nome`, `login`, `senha`, `email`, `ativo`, `deletado`, `data_cadastro`) VALUES
-(1, 1, 'Administrador', 'admin', 'q61dzSNl+CDJP82xebqi+/PJDgMXfSUUkSCw/xI9CegjxMSoSfUoTmB5GWnbpHn9Zc5JybKSNRE1zvI16e7D0g==', 'romabeckman@yahoo.com.br', 1, 0, '2013-07-05 01:25:58');
+(1, 1, 'Administrador', 'admin', 'q61dzSNl+CDJP82xebqi+/PJDgMXfSUUkSCw/xI9CegjxMSoSfUoTmB5GWnbpHn9Zc5JybKSNRE1zvI16e7D0g==', NULL, 1, 0, NULL);
 
 --
--- Constraints for dumped tables
+-- Restrições para as tabelas dumpadas
 --
 
 --
--- Limitadores para a tabela `cms_pagina`
+-- Restrições para a tabela `cms_pagina`
 --
 ALTER TABLE `cms_pagina`
   ADD CONSTRAINT `fk_cms_pagina_cms_pagina1` FOREIGN KEY (`id_pagina`) REFERENCES `cms_pagina` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Limitadores para a tabela `usu_log`
+-- Restrições para a tabela `usu_log`
 --
 ALTER TABLE `usu_log`
   ADD CONSTRAINT `usu_log_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usu_usuario` (`id`);
 
 --
--- Limitadores para a tabela `usu_permissoes`
+-- Restrições para a tabela `usu_permissoes`
 --
 ALTER TABLE `usu_permissoes`
   ADD CONSTRAINT `usu_permissoes_ibfk_1` FOREIGN KEY (`id_metodo`) REFERENCES `usu_metodo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `usu_permissoes_ibfk_2` FOREIGN KEY (`id_grupo_usuario`) REFERENCES `usu_grupo_usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limitadores para a tabela `usu_usuario`
+-- Restrições para a tabela `usu_usuario`
 --
 ALTER TABLE `usu_usuario`
   ADD CONSTRAINT `usuario_grupo` FOREIGN KEY (`id_grupo_usuario`) REFERENCES `usu_grupo_usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 SET FOREIGN_KEY_CHECKS=1;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

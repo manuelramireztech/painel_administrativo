@@ -6,8 +6,6 @@
  * @link https://www.facebook.com/romabeckman
  * @link http://twitter.com/romabeckman
  */
-
-
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -20,7 +18,7 @@ class grupo_usuario extends MY_Controller implements Crud_Painel {
 
     function index() {
         $data['conteudo'] = "grupo_usuario/main";
-        $data['title'] = "Grupo Usuário";
+        $data['title'] = "Grupo de Usuário";
         $vPaginate = $this->grupo_usuario_model->getPaginate(base_url() . "painel/grupo_usuario/index/?");
         $data['paginacao'] = $vPaginate['links'];
         $data['voGrupoUsuario'] = $vPaginate['data'];
@@ -28,7 +26,7 @@ class grupo_usuario extends MY_Controller implements Crud_Painel {
     }
 
     function adicionar() {
-        $data['migalha'] = array('painel/grupo_usuario' => 'Grupo Usuário');
+        $data['migalha'] = array('painel/grupo_usuario' => 'Grupo de Usuário');
         $data['conteudo'] = "grupo_usuario/save";
         $data['title'] = "Adicionar Grupo Usuário";
         $this->loadTemplatePainel(NULL, $data);
@@ -42,7 +40,7 @@ class grupo_usuario extends MY_Controller implements Crud_Painel {
             $this->sys_mensagem_model->setFlashData(7);
             redirect('/painel/grupo_usuario', 'refresh');
         } else {
-            $data['migalha'] = array('painel/grupo_usuario' => 'Grupo Usuário');
+            $data['migalha'] = array('painel/grupo_usuario' => 'Grupo de Usuário');
             $data['conteudo'] = "grupo_usuario/save";
             $data['title'] = "Alterar Grupo Usuário";
             $this->loadTemplatePainel(NULL, $data);
@@ -81,6 +79,8 @@ class grupo_usuario extends MY_Controller implements Crud_Painel {
                 }
             } else {
                 if ($this->grupo_usuario_model->insert($vReg)) {
+                    $nId = $this->db->insert_id();
+                    $this->metodo_model->save($nId);
                     $this->sys_mensagem_model->setFlashData(9);
                 } else {
                     $this->sys_mensagem_model->setFlashData(2);
@@ -88,8 +88,7 @@ class grupo_usuario extends MY_Controller implements Crud_Painel {
             }
 
             redirect('/painel/grupo_usuario', 'refresh');
-        }
-        else
+        } else
             $this->sys_mensagem_model->setFlashData(1);
     }
 

@@ -1,20 +1,12 @@
 <?php echo form_open('painel/permissoes/save', 'class="" id="form"'); ?>
-<?php echo form_button(array("type" => "submit"), '<i class="icon-save"></i> Salvar', 'class="btn btn-primary"'); ?>
+<?php echo form_button(array("type" => "submit"), 'Salvar', 'class="btn btn-primary"'); ?>
 
 <script>
     $(function() {
         $("#selecionar-todos").click(function() {
             var checked = $(this).prop('checked');
 
-            $('.permissao').each(function(indice, obj) {
-                if (checked) {
-                    $(obj).prop('checked', true);
-                } else {
-                    $(obj).removeAttr('checked');
-                }
-            });
-
-            $('.selecionar-metodo').each(function(indice, obj) {
+            $('input[type=checkbox]').each(function(indice, obj) {
                 if (checked) {
                     $(obj).prop('checked', true);
                 } else {
@@ -23,11 +15,16 @@
             });
         });
 
-        $(".selecionar-metodo").click(function() {
+        $(".permissao").click(function() {
+            var modulo = $(this).data('modulo');
+            var classe = $(this).data('classe');
             var checked = $(this).prop('checked');
-            var apelido = $(this).val();
+            var css = modulo;
 
-            $('.' + apelido).each(function(indice, obj) {
+            if (classe)
+                css += "-" + classe;
+            console.log(css);
+            $('.' + css).each(function(indice, obj) {
                 if (checked) {
                     $(obj).prop('checked', true);
                 } else {
@@ -36,50 +33,89 @@
             });
         });
 
-        if ($('.permissao:checked').length) {
-            $('#selecionar-todos').prop('checked', true);
-        }
-
-        $('.selecionar-metodo').each(function(indice, obj) {
-            var apelido = $(this).val();
-
-            if ($('.' + apelido + ":checked").length) {
-                $(obj).prop('checked', true);
+        var dl = $("dl:eq(0)");
+        dl.find("dt a").click(function() {
+            var $this = $(this);
+            if ($this.find("i").hasClass("icon-caret-down")) {
+                $this.find("i").removeClass("icon-caret-down");
+                $this.find("i").addClass("icon-caret-up");
+                $this.parents('dt:eq(0)').next().show();
+            } else {
+                $this.find("i").removeClass("icon-caret-up");
+                $this.find("i").addClass("icon-caret-down");
+                $this.parents('dt:eq(0)').next().hide();
             }
         });
     });
 </script>
+<style>
+    .dl-horizontal dt {text-align: left;}
+    .dl-horizontal dd {text-align: left;}
+</style>
 
-<input type="hidden" name="id_grupo_usuario" value="<?php echo $nIdGrupoUsuario; ?>" />
-<table cellspacing="0" cellpadding="0" class="table table-striped table-advance table-hover">
-    <thead>
-        <tr>
-            <th style="width: 50px;" style="text-align: right;"><input type="checkbox" value="1" id="selecionar-todos" /></th>
-            <th style="width: 250px;">Classe</th>
-            <th>Metodo</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $sClasse = "";
-        foreach ($voMetodo as $oMetodo) {
-            if ($sClasse != $oMetodo->classe) {
-                $sClasse = $oMetodo->classe;
-                ?>
-                <tr style="background-color: #EEE;">
-                    <td style="text-align: left;"><input type="checkbox" value="<?php echo $oMetodo->modulo . "-" . $oMetodo->classe; ?>" class="selecionar-metodo" /></td>
-                    <td><?php echo $oMetodo->area ?></td>
-                    <td>&ensp;</td>
-                </tr>
-                <?
+<input type="hidden" name="id_grupo_usuario" value="<?php echo $oGrupoUsuario->id; ?>" />
+<br />
+<br />
+<input type="checkbox" value="1" id="selecionar-todos" /> Selecionar Todos (<?php echo $nPermissaoTotal ?> Permissões)
+
+<dl style="margin-left: 30px;">
+    <?php
+    foreach ($vsModulo as $sModulo) {
+        ?>
+        <dt class="text-left">
+        <input type="checkbox" value="<?php echo $sModulo; ?>" <?php echo $vnPermissaoModulo[$sModulo]['com'] == $vnPermissaoModulo[$sModulo]['total'] ? 'checked=""' : '' ?> data-modulo="<?php echo $sModulo ?>" class="permissao <?php echo $sModulo ?>" />
+        <a href="javascript:;">
+            <?php echo strtoupper($sModulo); ?> (<?php echo Util::decimalParaPagina(($vnPermissaoModulo[$sModulo]['com'] * 100) / $vnPermissaoModulo[$sModulo]['total']) ?>% - <?php echo $vnPermissaoModulo[$sModulo]['com'] ?>/<?php echo $vnPermissaoModulo[$sModulo]['total'] ?>)
+            <i class="icon-caret-down"></i>
+        </a>
+        </dt>
+        <dd class="text-left" style="display: none; margin-left: 70px;">
+            <?php
+            foreach ($vsClasses as $sClasse => $sArea) {
+                if (isset($voMetodo[$sModulo][$sClasse])) {
+                    ?>
+                    <dl>
+                        <dt class="text-left">
+                        <strong>
+                            <input type="checkbox" value="<?php echo $sModulo . "-" . $sClasse; ?>" <?php echo $vnPermissaoClasse[$sModulo][$sClasse]['com'] == $vnPermissaoClasse[$sModulo][$sClasse]['total'] ? 'checked=""' : '' ?> data-modulo="<?php echo $sModulo ?>" data-classe="<?php echo $sClasse ?>" class="permissao <?php echo $sModulo ?>" />
+                            <a href="javascript:;">
+                                <?php echo $sArea; ?>(<?php echo Util::decimalParaPagina(($vnPermissaoClasse[$sModulo][$sClasse]['com'] * 100) / $vnPermissaoClasse[$sModulo][$sClasse]['total']) ?>% - <?php echo $vnPermissaoClasse[$sModulo][$sClasse]['com'] ?>/<?php echo $vnPermissaoClasse[$sModulo][$sClasse]['total'] ?>)
+                                <i class="fa icon-caret-down"></i>
+                            </a>
+                        </strong>
+                        </dt>
+                        <dd class="text-left" style="display: none; margin-left: 70px;">
+                            <?php
+                            foreach ($voMetodo[$sModulo][$sClasse] as $oMetodo) {
+                                $bPermissao = (BOOL) $oMetodo->permissao;
+                                if ($oMetodo->default)
+                                    $bPermissao = TRUE;
+                                ?>
+                                <div>
+                                    <?php echo form_checkbox('id_metodo[]', $oMetodo->id, (BOOL) $oMetodo->permissao, "class='{$sModulo} {$sModulo}-{$sClasse}'"); ?>
+                                    <?php echo $oMetodo->apelido ?>
+                                    <?php
+                                    if ($oMetodo->default) {
+                                        ?>
+                                        <em>(Default)</em>
+                                        <?
+                                    }
+                                    ?>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </dd>
+                    </dl>
+                    <?php
+                }
             }
             ?>
-            <tr>
-                <td style="text-align: right;"><?php echo form_checkbox('id_metodo[]', $oMetodo->id, (BOOL) $oMetodo->permissao, "class='permissao {$oMetodo->modulo}-{$oMetodo->classe}'"); ?></td>
-                <td>&ensp;</td>
-                <td><?php echo $oMetodo->apelido ?></td>
-            </tr>
-        <?php } ?>
-    </tbody>
-</table>
+        </dd>
+        <?
+    }
+    ?>
+</dl>
+
+
 <?php echo form_close(); ?>

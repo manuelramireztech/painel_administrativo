@@ -6,8 +6,6 @@
  * @link https://www.facebook.com/romabeckman
  * @link http://twitter.com/romabeckman
  */
-
-
 class metodo_model extends MY_Model {
 
     function __construct() {
@@ -18,7 +16,7 @@ class metodo_model extends MY_Model {
     function getAllComPermissao($nIdGrupoUsuario) {
         $voMetodo = $this->db
                 ->order_by('classe, metodo')
-                ->where(array('privado' => 1, 'default' => 0))
+                ->where(array('privado' => 1))
                 ->get($this->sTable)
                 ->result();
 
@@ -66,24 +64,24 @@ class metodo_model extends MY_Model {
                         ->row('existe');
     }
 
-    function save($nIdGrupoUsuario, $vnIdMetodo) {
+    function save($nIdGrupoUsuario, $vnIdMetodo = NULL) {
         $this->db->delete('usu_permissoes', array('id_grupo_usuario' => $nIdGrupoUsuario));
 
         if (!empty($vnIdMetodo)) {
             foreach ($vnIdMetodo as $nIdMetodo) {
                 $this->db->insert('usu_permissoes', array('id_grupo_usuario' => $nIdGrupoUsuario, 'id_metodo' => $nIdMetodo));
             }
-        }
+        } else {
+            $voMetodo = $this->db
+                    ->order_by('classe, metodo')
+                    ->where(array('default' => 1))
+                    ->get($this->sTable)
+                    ->result();
 
-        $voMetodo = $this->db
-                ->order_by('classe, metodo')
-                ->where(array('default' => 1))
-                ->get($this->sTable)
-                ->result();
-
-        if (!empty($voMetodo)) {
-            foreach ($voMetodo as $oMetodo) {
-                $this->db->insert('usu_permissoes', array('id_grupo_usuario' => $nIdGrupoUsuario, 'id_metodo' => $oMetodo->id));
+            if (!empty($voMetodo)) {
+                foreach ($voMetodo as $oMetodo) {
+                    $this->db->insert('usu_permissoes', array('id_grupo_usuario' => $nIdGrupoUsuario, 'id_metodo' => $oMetodo->id));
+                }
             }
         }
     }
