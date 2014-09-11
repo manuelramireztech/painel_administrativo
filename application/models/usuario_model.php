@@ -11,7 +11,7 @@ class usuario_model extends MY_Model {
     function __construct() {
         parent::__construct();
         $this->sTable = 'usu_usuario';
-        $this->setDeletado();
+        $this->bDeletado = TRUE;
     }
 
     function getLogin($sLogin, $sSenha) {

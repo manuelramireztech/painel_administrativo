@@ -54,6 +54,9 @@ class grupo_usuario_model extends MY_Model implements Model_Painel {
         //INSERT
         else {
             if ($this->grupo_usuario_model->insert($vReg)) {
+                $nId = $this->db->insert_id();
+                $this->metodo_model->save($nId);
+
                 $this->sys_mensagem_model->setFlashData(9);
             } else {
                 $this->sys_mensagem_model->setFlashData(2);
