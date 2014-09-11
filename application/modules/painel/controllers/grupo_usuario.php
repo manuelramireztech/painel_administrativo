@@ -22,7 +22,7 @@ class grupo_usuario extends MY_Controller implements Crud_Painel {
         $data['roGrupoUsuario'] = $vPaginate['result'];
 
         $data['conteudo'] = "grupo_usuario/main";
-        $data['title'] = "(" . $vPaginate['total'] . ") - Grupo de Usuário";
+        $data['title'] = "Grupo de Usuário (" . $vPaginate['total'] . ")";
         $this->loadTemplatePainel(NULL, $data);
     }
 

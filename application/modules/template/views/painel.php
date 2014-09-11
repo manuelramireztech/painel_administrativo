@@ -109,23 +109,6 @@
                 <div class='navigation'>
                     <ul class='nav nav-stacked' id="menu-navegacao">
                         <li class="active"><a href="<?php echo base_url(); ?>painel"><i class="icon-home"></i> <span>Home</span></a></li>
-
-                        <li>
-                            <a class="dropdown-collapse" href="javascript:;">
-                                <i class="icon-laptop"></i>
-                                <span>Conteúdo</span>
-                                <i class='icon-angle-down angle-down'></i>
-                            </a>
-                            <ul class='nav nav-stacked'>
-                                <?php
-                                if (isset($vPainelPermissao['painel/pagina/index'])) {
-                                    ?>
-                                    <li><a href="<?php echo base_url(); ?>painel/pagina"><i class="icon-caret-right"></i> <span>Página</span></a></li>
-                                    <?php
-                                }
-                                ?>
-                            </ul>
-                        </li>
                         <li>
                             <a class="dropdown-collapse" href="javascript:;">
                                 <i class="icon-wrench"></i>

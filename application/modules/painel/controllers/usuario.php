@@ -23,7 +23,7 @@ class usuario extends MY_Controller implements Crud_Painel {
         $data['roUsuario'] = $vPaginate['result'];
 
         $data['conteudo'] = "usuario/main";
-        $data['title'] = "(" . $vPaginate['total'] . ") - Usuário";
+        $data['title'] = "Usuário (" . $vPaginate['total'] . ")";
         $this->loadTemplatePainel(NULL, $data);
     }
 
