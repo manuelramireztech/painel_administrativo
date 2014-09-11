@@ -18,6 +18,7 @@ Painel Administrativo com Codeigniter
 6. alterar o campo **encryption_key** localizado em application/config/config.php: `$config['encryption_key'] = 'CHAVE_DE_CRIPTOGRAFIA';`
 
 Obs1: usu_usuario e usu_grupo_usuario possuem o campo **deletado** para exclusão lógica de registros.
+
 Obs2: Login e senha padrão: admin
 
 **Permissão**
