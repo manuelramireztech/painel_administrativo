@@ -322,7 +322,7 @@ class Util {
     }
 
     static function arrayMapEmpty($valor) {
-        if (!empty($valor) OR $valor === 0) {
+        if (!empty($valor) OR is_numeric($valor)) {
             return $valor;
         } else {
             return NULL;
