@@ -1,22 +1,26 @@
 Painel Administrativo com Codeigniter
 =====================
 
+**Funcionalidades**
+
 1. Controle de Usuário;
 2. Controle de Grupo de Usuário;
 3. Log de Ação;
 4. Permissão por grupo de usuário;
 
-Login e Senha para primeiro acesso como Administrador: admin
-
-Instalação
+**Instalação**
 
 1. Criar banco de dados no MySql;
 2. Executar o arquivo database.sql no banco de dados;
 3. Deletar arquivo database.sql;
 4. Configurar conexão com banco MySql em application/config/database.php;
 5. Configurar nome do Cliente ou Projeto, na constante NOME_CLIENTE em application/config/constants.php linha 40;
+6. alterar o campo **encryption_key** localizado em application/config/config.php: `$config['encryption_key'] = 'CHAVE_DE_CRIPTOGRAFIA';`
 
-Permissão
+Obs1: usu_usuario e usu_grupo_usuario possuem o campo **deletado** para exclusão lógica de registros.
+Obs2: Login e senha padrão: admin
+
+**Permissão**
 
 Permissões poderão ser adicionadas na tabela usu_metodo seguindo os campos abaixo:
 
