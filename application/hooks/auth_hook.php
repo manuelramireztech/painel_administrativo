@@ -27,23 +27,21 @@ class Auth_hook {
 
     protected function check_logged_painel($module, $classe, $metodo) {
         $this->ci->load->model('metodo_model');
-        $result = $this->ci->metodo_model->getAll(array('modulo' => $module, 'classe' => $classe, 'metodo' => $metodo));
+        $roMetodo = $this->ci->metodo_model->getAll(array('modulo' => $module, 'classe' => $classe, 'metodo' => $metodo));
 
         //Se este método ainda não existir na tabela, será cadastrado   
-        if (empty($result)) {
+        if ($roMetodo->num_rows() == 0) {
             redirect('painel/main/sempermissao', 'refresh');
         }
         //Se já existir traz as informações de público ou privado
         else {
+            $oMetodo = $roMetodo->row();
             $vPainel = $this->ci->session->userdata('painel');
 
-            if ($result[0]->privado) {
-                //Se for privado, verifica o login
-                $nIdMetodos = $result[0]->id;
-
+            if ($oMetodo->privado) {
                 //Se o usuário estiver logado vai verificar se tem permissão na tabela
-                if (!empty($vPainel) AND $nIdMetodos) {
-                    $bExist = $this->ci->metodo_model->validarPermissao($vPainel['id_grupo_usuario'], $nIdMetodos);
+                if (!empty($vPainel)) {
+                    $bExist = $this->ci->metodo_model->validarPermissao($vPainel['id_grupo_usuario'], $oMetodo->id);
 
                     //Se não vier nenhum resultado da consulta, manda para a página de usuário sem permissão
                     if ($bExist == 0)

@@ -1,10 +1,10 @@
-<?php echo form_open('painel/usuario/save', 'class="form-horizontal form-validate" role="form"'); ?>
+<?php echo form_open('painel/usuario/' . $action, 'class="form-horizontal form-validate" role="form"'); ?>
 <?php echo form_hidden('id', set_value('id', isset($oUsuario) ? $oUsuario->id : '')); ?>
 
 <div class="form-group">
-    <label for="id_grupo_usuario" class="col-sm-2">Grupo usuário: </label>
+    <label for="id_grupo_usuario" class="col-sm-2">Grupo de Usuário: </label>
     <div class="col-sm-10">
-        <?php echo form_dropdown('id_grupo_usuario', $grupo_usuario, (isset($oUsuario) ? $oUsuario->id_grupo_usuario : 0), 'id="id_grupo_usuario" class="required form-control"'); ?>
+        <?php echo form_dropdown('id_grupo_usuario', $vsGrupoUsuario, set_value('id_grupo_usuario', (isset($oUsuario) ? $oUsuario->id_grupo_usuario : 0)), 'id="id_grupo_usuario" class="required form-control "'); ?>
     </div>
 </div>
 <div class="form-group">

@@ -26,14 +26,13 @@ class log_model extends MY_Model {
         $result = $this->db
                 ->select('*')
                 ->select("(SELECT nome FROM usu_usuario WHERE " . $this->sTable . ".id_usuario = usu_usuario.id) AS usuario")
+                ->where($vDados)
                 ->order_by('id DESC')
-                ->limit($nPerPage, $nPaginas)
-                ->get_where($this->sTable, $vDados)
-                ->result();
+                ->get($this->sTable, $nPerPage, $nPaginas);
 
         $this->load->library('paginacao', array('total_rows' => $nTotal, 'base_url' => $sUrl, 'per_page' => $nPerPage, 'cur_page' => $nPaginas));
         $sLinks = $this->paginacao->painel();
-        return array('data' => $result, 'links' => $sLinks);
+        return array('result' => $result, 'links' => $sLinks);
     }
 
 }

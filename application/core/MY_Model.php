@@ -8,6 +8,8 @@
  */
 (defined('BASEPATH')) OR exit('No direct script access allowed');
 
+require_once APPPATH . 'interfaces/Model_Painel.php';
+
 class MY_Model extends CI_Model {
 
     protected $sTable = NULL;
@@ -35,7 +37,7 @@ class MY_Model extends CI_Model {
      * @param	array Parâmetros de consulta (where)
      * @param	string [coluna] ASC ou DESC
      * @param	interger Quantidade de resultados. (limit)
-     * @return	array 
+     * @return	result 
      */
     public function getAll($vDados = array(), $sOrderBy = NULL, $nLimit = NULL) {
         if ($this->bDeletado) {
@@ -53,8 +55,7 @@ class MY_Model extends CI_Model {
 
         return $this->db
                         ->where($vDados)
-                        ->get($this->sTable)
-                        ->result();
+                        ->get($this->sTable);
     }
 
     /**
@@ -70,6 +71,7 @@ class MY_Model extends CI_Model {
             $vDados['deletado'] = 0;
 
         return $this->db
+                        ->limit(1)
                         ->get_where($this->sTable, $vDados)
                         ->row(0);
     }
@@ -243,7 +245,7 @@ class MY_Model extends CI_Model {
                     ->select('COUNT(*) AS total')
                     ->get_where($this->sTable, array($sCampo => $nValor))
                     ->row('total');
-            
+
             if (strpos($sCach, $nValor . ',') !== FALSE)
                 $nControleLoop--;
             else
@@ -278,8 +280,10 @@ class MY_Model extends CI_Model {
             $vDados = array_filter($vDados);
 
             if (!empty($vDados)) {
+                $this->load->helper('text');
+
                 foreach ($vDados as $sIndice => $sDados) {
-                    $sDados = Util::substr($sDados, 200);
+                    $sDados = character_limiter($sDados, 200);
                     $sDescricao .= Util::trataNome($sIndice) . ": $sDados\n";
                 }
 

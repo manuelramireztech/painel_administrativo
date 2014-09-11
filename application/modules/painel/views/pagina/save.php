@@ -14,7 +14,7 @@
 <div class="form-group">
     <label for="id_pagina" class="col-sm-2">Pagina: </label>
     <div class="col-sm-10">
-        <?php echo form_dropdown('id_pagina', $pagina, (isset($oPagina) ? $oPagina->id_pagina : 0), 'id="id_pagina" class="form-control"'); ?>
+        <?php echo form_dropdown('id_pagina', $vsPagina, (isset($oPagina) ? $oPagina->id_pagina : 0), 'id="id_pagina" class="form-control"'); ?>
     </div>
 </div>
 <div class="form-group">

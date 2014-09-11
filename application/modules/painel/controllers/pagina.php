@@ -24,12 +24,12 @@ class pagina extends MY_Controller implements Crud_Painel {
         $data['title'] = "Página";
         $vPaginate = $this->pagina_model->getPaginate(base_url() . "painel/pagina/index/?");
         $data['paginacao'] = $vPaginate['links'];
-        $data['voPagina'] = $vPaginate['data'];
+        $data['roPagina'] = $vPaginate['result'];
         $this->loadTemplatePainel(NULL, $data);
     }
 
     function adicionar() {
-        $data['pagina'] = array('' => 'Nenhum') + $this->pagina_model->getAllSelect(array('id_pagina' => NULL, 'tipo' => 'menu'));
+        $data['vsPagina'] = array('' => 'Nenhum') + $this->pagina_model->getAllSelect(array('id_pagina' => NULL, 'tipo' => 'menu'));
         $data['migalha'] = array('painel/pagina' => 'Página');
         $data['conteudo'] = "pagina/save";
         $data['title'] = "Adicionar Página";
@@ -44,7 +44,7 @@ class pagina extends MY_Controller implements Crud_Painel {
             $this->sys_mensagem_model->setFlashData(7);
             redirect('/painel/pagina', 'refresh');
         } else {
-            $data['pagina'] = array('' => 'Nenhum') + $this->pagina_model->getAllSelect(array('id_pagina' => NULL, 'tipo' => 'menu'));
+            $data['vsPagina'] = array('' => 'Nenhum') + $this->pagina_model->getAllSelect(array('id_pagina' => NULL, 'tipo' => 'menu'));
             $data['migalha'] = array('painel/pagina' => 'Página');
             $data['conteudo'] = "pagina/save";
             $data['title'] = "Alterar Página";

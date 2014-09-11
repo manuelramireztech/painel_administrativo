@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <?php
-        foreach ($voPagina as $oPagina) {
+        foreach ($roPagina->result() as $oPagina) {
             ?>
             <tr>
                 <td><?php echo $oPagina->pagina ?></td>

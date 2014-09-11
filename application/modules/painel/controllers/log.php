@@ -24,7 +24,7 @@ class log extends MY_Controller {
         $data['title'] = "Log";
         $vPaginate = $this->log_model->getPaginate(base_url() . "painel/log/index/?");
         $data['paginacao'] = $vPaginate['links'];
-        $data['voLog'] = $vPaginate['data'];
+        $data['roLog'] = $vPaginate['result'];
         $this->loadTemplatePainel(NULL, $data);
     }
 

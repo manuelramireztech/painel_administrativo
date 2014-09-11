@@ -6,20 +6,19 @@
  * @link https://www.facebook.com/romabeckman
  * @link http://twitter.com/romabeckman
  */
-
-
-class grupo_usuario_model extends MY_Model {
+class grupo_usuario_model extends MY_Model implements Model_Painel {
 
     function __construct() {
         parent::__construct();
         $this->sTable = 'usu_grupo_usuario';
-        $this->setDeletado();
+        $this->bDeletado = TRUE;
     }
 
-    function getPaginate($sUrl, $vDados = array()) {
+    public function getPaginate($sUrl, $vDados = array()) {
         $vDados['deletado'] = 0;
         $nTotal = $this->db->select('COUNT(*) AS total')
-                ->get_where($this->sTable, $vDados)
+                ->where($vDados)
+                ->get_where($this->sTable)
                 ->row('total');
 
         $nPerPage = 30;
@@ -27,14 +26,39 @@ class grupo_usuario_model extends MY_Model {
 
         $result = $this->db
                 ->select('*')
-                ->order_by('id DESC')
-                ->limit($nPerPage, $nPaginas)
-                ->get_where($this->sTable, $vDados)
-                ->result();
+                ->order_by('id', 'DESC')
+                ->where($vDados)
+                ->get($this->sTable, $nPerPage, $nPaginas);
 
         $this->load->library('paginacao', array('total_rows' => $nTotal, 'base_url' => $sUrl, 'per_page' => $nPerPage, 'cur_page' => $nPaginas));
         $sLinks = $this->paginacao->painel();
-        return array('data' => $result, 'links' => $sLinks);
+        return array('result' => $result, 'links' => $sLinks, 'total' => $nTotal);
+    }
+
+    public function save() {
+        $vDados = $this->input->post();
+        $vDados = $this->security->xss_clean($vDados);
+
+        $vReg = array(
+            'nome' => $vDados["nome"],
+        );
+
+        //UPDATE
+        if (!empty($vDados['id'])) {
+            if ($this->grupo_usuario_model->update($vReg, $vDados['id'])) {
+                $this->sys_mensagem_model->setFlashData(9);
+            } else {
+                $this->sys_mensagem_model->setFlashData(2);
+            }
+        }
+        //INSERT
+        else {
+            if ($this->grupo_usuario_model->insert($vReg)) {
+                $this->sys_mensagem_model->setFlashData(9);
+            } else {
+                $this->sys_mensagem_model->setFlashData(2);
+            }
+        }
     }
 
 }

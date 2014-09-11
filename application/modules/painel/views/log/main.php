@@ -16,12 +16,12 @@
             <th>Acesso</th>
             <th>IP</th>
             <th>Descrição</th>
-            <th>Data cadastro</th>
+            <th>Data/Hora</th>
         </tr>
     </thead>
     <tbody>
         <?php
-        foreach ($voLog as $oLog) {
+        foreach ($roLog->result() as $oLog) {
             ?>
             <tr>
                 <td><?php echo $oLog->usuario ?></td>

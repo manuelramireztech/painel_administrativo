@@ -16,80 +16,75 @@ class grupo_usuario extends MY_Controller implements Crud_Painel {
         $this->load->model('grupo_usuario_model');
     }
 
-    function index() {
-        $data['conteudo'] = "grupo_usuario/main";
-        $data['title'] = "Grupo de Usuário";
+    public function index() {
         $vPaginate = $this->grupo_usuario_model->getPaginate(base_url() . "painel/grupo_usuario/index/?");
-        $data['paginacao'] = $vPaginate['links'];
-        $data['voGrupoUsuario'] = $vPaginate['data'];
+        $data['sPaginacao'] = $vPaginate['links'];
+        $data['roGrupoUsuario'] = $vPaginate['result'];
+
+        $data['conteudo'] = "grupo_usuario/main";
+        $data['title'] = "(" . $vPaginate['total'] . ") - Grupo de Usuário";
         $this->loadTemplatePainel(NULL, $data);
     }
 
-    function adicionar() {
+    public function adicionar() {
+        if (count($_POST)) {
+            if ($this->validation()) {
+                $this->grupo_usuario_model->save();
+                redirect('painel/grupo_usuario', 'refresh');
+                return;
+            }
+        }
+
+        $data['action'] = "adicionar";
         $data['migalha'] = array('painel/grupo_usuario' => 'Grupo de Usuário');
         $data['conteudo'] = "grupo_usuario/save";
-        $data['title'] = "Adicionar Grupo Usuário";
+        $data['title'] = "Adicionar Grupo de Usuário";
         $this->loadTemplatePainel(NULL, $data);
     }
 
-    function alterar() {
+    public function alterar() {
+        if (count($_POST)) {
+            if ($this->validation()) {
+                $this->grupo_usuario_model->save();
+                redirect('painel/grupo_usuario', 'refresh');
+                return;
+            }
+        }
+
         $nId = $this->security->xss_clean($this->uri->segment(4));
         $data['oGrupoUsuario'] = $this->grupo_usuario_model->get($nId);
 
         if (empty($data['oGrupoUsuario'])) {
             $this->sys_mensagem_model->setFlashData(7);
-            redirect('/painel/grupo_usuario', 'refresh');
+            redirect('painel/grupo_usuario', 'refresh');
         } else {
+            $data['action'] = "alterar/" . $nId;
             $data['migalha'] = array('painel/grupo_usuario' => 'Grupo de Usuário');
             $data['conteudo'] = "grupo_usuario/save";
-            $data['title'] = "Alterar Grupo Usuário";
+            $data['title'] = "Alterar Grupo de Usuário";
             $this->loadTemplatePainel(NULL, $data);
         }
     }
 
-    function remover() {
-        $sId = $this->security->xss_clean($this->input->get('id', true));
+    public function remover() {
+        $nId = $this->security->xss_clean($this->input->get('id', true));
 
-        if (empty($sId)) {
+        if (empty($nId)) {
             $this->sys_mensagem_model->setFlashData(2);
         } else {
-            if ($this->grupo_usuario_model->remove($sId))
+            if ($this->grupo_usuario_model->remove($nId))
                 $this->sys_mensagem_model->setFlashData(8);
             else
                 $this->sys_mensagem_model->setFlashData(1);
         }
 
-        redirect('/painel/grupo_usuario', 'refresh');
+        redirect('painel/grupo_usuario', 'refresh');
     }
 
-    function save() {
-        $vDados = $this->input->post();
-        $vDados = $this->security->xss_clean($vDados);
-
-        if (!empty($vDados)) {
-            $vReg = array(
-                'nome' => $vDados["nome"]
-            );
-
-            if ((INT) $vDados['id']) {
-                if ($this->grupo_usuario_model->update($vReg, $vDados['id'])) {
-                    $this->sys_mensagem_model->setFlashData(9);
-                } else {
-                    $this->sys_mensagem_model->setFlashData(2);
-                }
-            } else {
-                if ($this->grupo_usuario_model->insert($vReg)) {
-                    $nId = $this->db->insert_id();
-                    $this->metodo_model->save($nId);
-                    $this->sys_mensagem_model->setFlashData(9);
-                } else {
-                    $this->sys_mensagem_model->setFlashData(2);
-                }
-            }
-
-            redirect('/painel/grupo_usuario', 'refresh');
-        } else
-            $this->sys_mensagem_model->setFlashData(1);
+    private function validation() {
+        $this->my_form_validation->set_rules('nome', 'Nome', 'required|max_length[45]');
+        $this->my_form_validation->set_rules('deletado', 'Deletado', '');
+        return $this->my_form_validation->run();
     }
 
 }

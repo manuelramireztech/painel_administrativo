@@ -7,13 +7,9 @@
  * @link http://twitter.com/romabeckman
  */
 
-interface Crud_Painel {
+interface Model_Painel {
 
-    public function index(); //ACTION
+    public function getPaginate($sUrl, $vDados);
 
-    public function adicionar(); //ACTION
-
-    public function alterar(); //ACTION
-
-    public function remover(); //ACTION
+    public function save();
 }
