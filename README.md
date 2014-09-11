@@ -19,6 +19,7 @@ Instalação
 Permissão
 
 Permissões poderão ser adicionadas na tabela usu_metodo seguindo os campos abaixo:
+
 1. modulo => Módulo localizado no diretório application/modules;
 2. classe => Nome do Controller localizado dentro do módulo;
 3. metodo => Método do Controller;
