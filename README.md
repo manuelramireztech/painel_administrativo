@@ -1,7 +1,5 @@
-painel_administrativo
-=====================
-
 Painel Administrativo com Codeigniter
+=====================
 
 1. Controle de Usuário;
 2. Controle de Grupo de Usuário;
