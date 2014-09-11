@@ -13,7 +13,7 @@ require_once APPPATH . 'interfaces/Model_Painel.php';
 class MY_Model extends CI_Model {
 
     protected $sTable = NULL;
-    private $bDeletado = FALSE;
+    protected $bDeletado = FALSE;
 
     /**
      * Constructor
@@ -22,13 +22,6 @@ class MY_Model extends CI_Model {
      */
     function __construct() {
         parent::__construct();
-    }
-
-    /**
-     * Aplica nas consultas o valor 0 a coluna deletado. OBS: Os métodos filhos de MY_Model deverão aplicar nas consultas o valor 0 para o campo deletado.
-     */
-    protected function setDeletado() {
-        $this->bDeletado = TRUE;
     }
 
     /**
