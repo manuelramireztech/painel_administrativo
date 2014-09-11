@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tempo de Geração: Set 04, 2014 as 09:36 PM
+-- Tempo de Geração: Set 10, 2014 as 10:41 PM
 -- Versão do Servidor: 5.1.44
 -- Versão do PHP: 5.3.1
 
@@ -11,34 +11,8 @@ SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Banco de Dados: `modelo_cms`
+-- Banco de Dados: `painel_administrativo`
 --
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `cms_pagina`
---
-
-DROP TABLE IF EXISTS `cms_pagina`;
-CREATE TABLE IF NOT EXISTS `cms_pagina` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pagina` int(11) DEFAULT NULL,
-  `nome` varchar(200) NOT NULL,
-  `tipo` enum('conteudo','link','menu') DEFAULT NULL,
-  `url` varchar(500) DEFAULT NULL,
-  `texto` text,
-  `ativo` tinyint(1) DEFAULT '0',
-  `deletado` tinyint(1) DEFAULT '0',
-  `data_cadastro` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `fk_cms_pagina_cms_pagina1_idx` (`id_pagina`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Extraindo dados da tabela `cms_pagina`
---
-
 
 -- --------------------------------------------------------
 
@@ -185,23 +159,13 @@ INSERT INTO `usu_metodo` (`id`, `modulo`, `classe`, `metodo`, `area`, `apelido`,
 (14, 'painel', 'usuario', 'alterar', 'Usuário', 'Alterar', 1, 0),
 (16, 'painel', 'usuario', 'remover', 'Usuário', 'Remover', 1, 0),
 (17, 'painel', 'usuario', 'adicionar', 'Usuário', 'Adicionar', 1, 0),
-(18, 'painel', 'usuario', 'save', 'Usuário', 'Salvar', 1, 0),
 (20, 'painel', 'usuario', 'meus_dados', 'Usuário', 'Meus Dados', 1, 1),
-(21, 'painel', 'usuario', 'save_meus_dados', 'Usuário', 'Salvar Meus Dados', 1, 1),
-(27, 'painel', 'pagina', 'index', 'Página', 'Visualizar', 1, 0),
-(28, 'painel', 'pagina', 'adicionar', 'Página', 'Adicionar', 1, 0),
 (48, 'painel', 'grupo_usuario', 'index', 'Grupo de Usuário', 'Visualizar', 1, 0),
 (49, 'painel', 'permissoes', 'index', 'Permissões', 'Visualizar', 1, 0),
 (50, 'painel', 'configuracao', 'index', 'Configuração', 'Visualizar', 1, 0),
-(51, 'painel', 'configuracao', 'save', 'Configuração', 'Salvar', 1, 0),
 (52, 'painel', 'grupo_usuario', 'adicionar', 'Grupo de Usuário', 'Adicionar', 1, 0),
-(53, 'painel', 'grupo_usuario', 'save', 'Grupo de Usuário', 'Salvar', 1, 0),
 (54, 'painel', 'grupo_usuario', 'alterar', 'Grupo de Usuário', 'Alterar', 1, 0),
 (55, 'painel', 'grupo_usuario', 'remover', 'Grupo de Usuário', 'Remover', 1, 0),
-(56, 'painel', 'permissoes', 'save', 'Permissões', 'Salvar', 1, 0),
-(57, 'painel', 'pagina', 'save', 'Página', 'Salvar', 1, 0),
-(58, 'painel', 'pagina', 'alterar', 'Página', 'Alterar', 1, 0),
-(59, 'painel', 'pagina', 'remover', 'Página', 'Remover', 1, 0),
 (60, 'painel', 'main', 'recupera_senha', '', '', 0, 0),
 (67, 'painel', 'main', '404', '', '', 0, 0),
 (71, 'painel', 'main', 'painel_nav', '', '', 0, 0);
@@ -232,25 +196,14 @@ INSERT INTO `usu_permissoes` (`id_metodo`, `id_grupo_usuario`) VALUES
 (14, 1),
 (16, 1),
 (17, 1),
-(18, 1),
 (20, 1),
 (20, 2),
-(21, 1),
-(21, 2),
-(27, 1),
-(28, 1),
 (48, 1),
 (49, 1),
 (50, 1),
-(51, 1),
 (52, 1),
-(53, 1),
 (54, 1),
-(55, 1),
-(56, 1),
-(57, 1),
-(58, 1),
-(59, 1);
+(55, 1);
 
 -- --------------------------------------------------------
 
@@ -278,17 +231,11 @@ CREATE TABLE IF NOT EXISTS `usu_usuario` (
 --
 
 INSERT INTO `usu_usuario` (`id`, `id_grupo_usuario`, `nome`, `login`, `senha`, `email`, `ativo`, `deletado`, `data_cadastro`) VALUES
-(1, 1, 'Administrador', 'admin', 'q61dzSNl+CDJP82xebqi+/PJDgMXfSUUkSCw/xI9CegjxMSoSfUoTmB5GWnbpHn9Zc5JybKSNRE1zvI16e7D0g==', NULL, 1, 0, NULL);
+(1, 1, 'Administrador', 'admin', 'q61dzSNl+CDJP82xebqi+/PJDgMXfSUUkSCw/xI9CegjxMSoSfUoTmB5GWnbpHn9Zc5JybKSNRE1zvI16e7D0g==', 'my@email.com', 1, 0, '2013-07-04 22:25:58');
 
 --
 -- Restrições para as tabelas dumpadas
 --
-
---
--- Restrições para a tabela `cms_pagina`
---
-ALTER TABLE `cms_pagina`
-  ADD CONSTRAINT `fk_cms_pagina_cms_pagina1` FOREIGN KEY (`id_pagina`) REFERENCES `cms_pagina` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Restrições para a tabela `usu_log`
