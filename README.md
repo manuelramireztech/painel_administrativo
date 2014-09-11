@@ -14,7 +14,7 @@ Painel Administrativo com Codeigniter
 2. Executar o arquivo database.sql no banco de dados;
 3. Deletar arquivo database.sql;
 4. Configurar conexão com banco MySql em application/config/database.php;
-5. Configurar nome do Cliente ou Projeto, na constante NOME_CLIENTE em application/config/constants.php: `define('NOME_CLIENTE', 'EMPRESA');`;
+5. Configurar nome do Cliente ou Projeto, na constante NOME_CLIENTE em application/config/constants.php: `define('NOME_CLIENTE', 'EMPRESA');`
 6. alterar o campo **encryption_key** localizado em application/config/config.php: `$config['encryption_key'] = 'CHAVE_DE_CRIPTOGRAFIA';`
 
 Obs1: usu_usuario e usu_grupo_usuario possuem o campo **deletado** para exclusão lógica de registros.
