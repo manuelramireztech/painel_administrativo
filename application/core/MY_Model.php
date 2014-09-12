@@ -8,8 +8,6 @@
  */
 (defined('BASEPATH')) OR exit('No direct script access allowed');
 
-require_once APPPATH . 'interfaces/Model_Painel.php';
-
 class MY_Model extends CI_Model {
 
     protected $sTable = NULL;

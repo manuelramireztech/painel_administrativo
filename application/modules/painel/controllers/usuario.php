@@ -28,49 +28,44 @@ class usuario extends MY_Controller implements Crud_Painel {
     }
 
     public function adicionar() {
-        if (count($_POST)) {
-            if ($this->validation()) {
-                $this->usuario_model->save();
-                redirect('painel/usuario', 'refresh');
-                return;
-            }
+        if ($this->validation()) {
+            $this->usuario_model->save($this->_vPost);
+            redirect('painel/usuario', 'refresh');
+        } else {
+            $data['vsGrupoUsuario'] = array('' => 'Selecione') + $this->grupo_usuario_model->getAllSelect();
+            $data['action'] = "adicionar";
+            $data['migalha'] = array('painel/usuario' => 'Usuário');
+            $data['conteudo'] = "usuario/save";
+            $data['title'] = "Adicionar Usuário";
+            $this->loadTemplatePainel(NULL, $data);
         }
-
-        $data['vsGrupoUsuario'] = array('' => 'Selecione') + $this->grupo_usuario_model->getAllSelect();
-        $data['action'] = "adicionar";
-        $data['migalha'] = array('painel/usuario' => 'Usuário');
-        $data['conteudo'] = "usuario/save";
-        $data['title'] = "Adicionar Usuário";
-        $this->loadTemplatePainel(NULL, $data);
     }
 
     public function alterar() {
-        if (count($_POST)) {
-            if ($this->validation()) {
-                $this->usuario_model->save();
-                redirect('painel/usuario', 'refresh');
-                return;
-            }
-        }
-
-        $nId = $this->security->xss_clean($this->uri->segment(4));
+        $nId = $this->uri->segment(4);
         $data['oUsuario'] = $this->usuario_model->get($nId);
 
         if (empty($data['oUsuario'])) {
             $this->sys_mensagem_model->setFlashData(7);
             redirect('painel/usuario', 'refresh');
         } else {
-            $data['vsGrupoUsuario'] = array('' => 'Selecione') + $this->grupo_usuario_model->getAllSelect();
-            $data['action'] = "alterar/" . $nId;
-            $data['migalha'] = array('painel/usuario' => 'Usuário');
-            $data['conteudo'] = "usuario/save";
-            $data['title'] = "Alterar Usuário";
-            $this->loadTemplatePainel(NULL, $data);
+            if ($this->validation()) {
+                $this->_vPost['id'] = $data['oUsuario']->id;
+                $this->usuario_model->save($this->_vPost);
+                redirect('painel/usuario', 'refresh');
+            } else {
+                $data['vsGrupoUsuario'] = array('' => 'Selecione') + $this->grupo_usuario_model->getAllSelect();
+                $data['action'] = "alterar/" . $data['oUsuario']->id;
+                $data['migalha'] = array('painel/usuario' => 'Usuário');
+                $data['conteudo'] = "usuario/save";
+                $data['title'] = "Alterar Usuário";
+                $this->loadTemplatePainel(NULL, $data);
+            }
         }
     }
 
     public function remover() {
-        $nId = $this->security->xss_clean($this->input->get('id', true));
+        $nId = $this->_vGet['id'];
 
         if (empty($nId)) {
             $this->sys_mensagem_model->setFlashData(2);
@@ -84,13 +79,11 @@ class usuario extends MY_Controller implements Crud_Painel {
         redirect('painel/usuario', 'refresh');
     }
 
-    function meus_dados() {
-        if (count($_POST)) {
-            if ($this->validation_meus_dados()) {
-                $this->usuario_model->save_meus_dados();
-                redirect('/painel/usuario/meus_dados', 'refresh');
-                return;
-            }
+    public function meus_dados() {
+        if ($this->validation_meus_dados()) {
+            $this->usuario_model->save_meus_dados($this->_vPost, $this->_vPainel['id']);
+            redirect('/painel/usuario/meus_dados', 'refresh');
+            return;
         }
 
         $vPainel = $this->session->userdata('painel');
@@ -101,6 +94,9 @@ class usuario extends MY_Controller implements Crud_Painel {
     }
 
     private function validation() {
+        if (empty($this->_vPost))
+            return;
+
         $this->my_form_validation->set_rules('id_grupo_usuario', 'Grupo usuário', 'required|max_length[10]');
         $this->my_form_validation->set_rules('nome', 'Nome', 'required|max_length[200]');
         $this->my_form_validation->set_rules('login', 'Login', 'required|max_length[100]');
@@ -112,6 +108,9 @@ class usuario extends MY_Controller implements Crud_Painel {
     }
     
     private function validation_meus_dados() {
+        if (empty($this->_vPost))
+            return;
+
         $this->my_form_validation->set_rules('nome', 'Nome', 'required|max_length[200]');
         $this->my_form_validation->set_rules('login', 'Login', 'required|max_length[100]');
         $this->my_form_validation->set_rules('email', 'Email', 'required|max_length[100]|valid_email');

@@ -12,9 +12,13 @@
 require_once APPPATH . 'interfaces/Crud_Painel.php';
 
 class MY_Controller extends MX_Controller {
+    protected $_vPost, $_vGet, $_vPainel;
 
     function __construct() {
         parent::__construct();
+        $this->_vPost = $this->input->post(NULL, TRUE);
+        $this->_vGet = $this->input->get(NULL, TRUE);
+        $this->_vPainel = $this->session->userdata('painel');
     }
 
     protected function loadTemplatePainel($view = NULL, $vars = array(), $return = FALSE) {
@@ -24,7 +28,7 @@ class MY_Controller extends MX_Controller {
         if (!isset($vars['title']))
             $vars['title'] = NOME_CLIENTE;
 
-        $vars['vPainel'] = $this->session->userdata('painel');
+        $vars['vPainel'] = $this->_vPainel;
         $vars['bPainelNav'] = $this->session->userdata('painel_nav');
         $vars['vPainelPermissao'] = $this->metodo_model->getPermissao($vars['vPainel']['id_grupo_usuario']);
         $this->load->view($view, $vars, $return);

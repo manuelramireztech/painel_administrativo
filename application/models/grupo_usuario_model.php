@@ -6,7 +6,7 @@
  * @link https://www.facebook.com/romabeckman
  * @link http://twitter.com/romabeckman
  */
-class grupo_usuario_model extends MY_Model implements Model_Painel {
+class grupo_usuario_model extends MY_Model {
 
     function __construct() {
         parent::__construct();
@@ -35,16 +35,13 @@ class grupo_usuario_model extends MY_Model implements Model_Painel {
         return array('result' => $result, 'links' => $sLinks, 'total' => $nTotal);
     }
 
-    public function save() {
-        $vDados = $this->input->post();
-        $vDados = $this->security->xss_clean($vDados);
-
+    public function save($vDados, $sCampoReferencia = 'id') {
         $vReg = array(
             'nome' => $vDados["nome"],
         );
 
         //UPDATE
-        if (!empty($vDados['id'])) {
+        if (isset($vDados[$sCampoReferencia]) AND !empty($vDados[$sCampoReferencia])) {
             if ($this->grupo_usuario_model->update($vReg, $vDados['id'])) {
                 $this->sys_mensagem_model->setFlashData(9);
             } else {
