@@ -11,7 +11,7 @@
 
 require_once APPPATH . 'interfaces/Crud_Painel.php';
 
-class MY_Controller extends MX_Controller {
+class MY_Controller extends CI_Controller {
     protected $_vPost, $_vGet, $_vPainel;
 
     function __construct() {

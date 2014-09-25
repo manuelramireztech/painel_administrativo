@@ -41,7 +41,7 @@ class pages extends MY_Controller {
     function captcha() {
         $this->load->library('securimage/securimage');
         $this->securimage->charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        $this->securimage->code_length = rand(4, 5);
+        $this->securimage->code_length = rand(3, 5);
 //        $this->securimage->display_value = Util::gerarSenha(5, false, true, true, false);
         $this->securimage->num_lines = rand(7, 11);
         $this->securimage->case_sensitive = false;
@@ -59,32 +59,27 @@ class pages extends MY_Controller {
         $this->form_validation->set_rules('assunto', 'Assunto', 'required');
         $this->form_validation->set_rules('mensagem', 'Mensagem', 'required');
         //$this->form_validation->set_rules('code', 'Código de Segurança', 'required|callback_code_check');
+        
+        if ($this->form_validation->run()) {
+            $vDados = $this->input->post();
+            $vDados = $this->security->xss_clean($vDados);
 
-        if ($this->validar_envio('envia_contato')) {
-            if ($this->form_validation->run()) {
-                $vDados = $this->input->post();
-                $vDados = $this->security->xss_clean($vDados);
-
-                $sMensagem = "<p>Segue abaixo os dados de contato:</p>    
-                        <p>
-                            Nome: {$vDados['nome']}<br />
-                            E-mail: {$vDados['email']}<br />
-                            Assunto: {$vDados['assunto']}<br />
-                            IP: {$_SERVER['REMOTE_ADDR']}<br />
-                            Navegador: {$_SERVER['HTTP_USER_AGENT']}<br />
-                            Mensagem: " . nl2br($vDados['mensagem']) . "<br />
-                        </p>";
-                $this->load->library('envia_email');
-                $sContato = $this->configuracao_model->getValor('EMAIL_CONTATO');
-                $this->envia_email->enviar($sContato, 'Dados de Contato', $sMensagem);
-                $this->session->set_flashdata('site_msg', array('msg' => 'E-mail enviado com sucesso!', 'type' => 'success'));
-                redirect('/site/pages/contato', 'refresh');
-            } else {
-                $this->contato();
-            }
+            $sMensagem = "<p>Segue abaixo os dados de contato:</p>    
+            <p>
+                Nome: {$vDados['nome']}<br />
+                E-mail: {$vDados['email']}<br />
+                Assunto: {$vDados['assunto']}<br />
+                IP: {$_SERVER['REMOTE_ADDR']}<br />
+                Navegador: {$_SERVER['HTTP_USER_AGENT']}<br />
+                Mensagem: " . nl2br($vDados['mensagem']) . "<br />
+            </p>";
+            $this->load->library('envia_email');
+            $sContato = $this->configuracao_model->getValor('EMAIL_CONTATO');
+            $this->envia_email->enviar($sContato, 'Dados de Contato', $sMensagem);
+            $this->session->set_flashdata('site_msg', array('msg' => 'E-mail enviado com sucesso!', 'type' => 'success'));
+            redirect('/site/pages/contato', 'refresh');
         } else {
-            $this->session->set_flashdata('site_msg', array('msg' => 'Estamos com problema para enviar os dados de contato. Por favor tente novamente em alguns minutos!', 'type' => 'warning'));
-            redirect('pages/contato', 'refresh');
+            $this->contato();
         }
     }
 
@@ -97,28 +92,4 @@ class pages extends MY_Controller {
             return FALSE;
         }
     }
-
-    private function validar_envio($sSessao, $nCount = 5) {
-        $sIp = $_SERVER['REMOTE_ADDR'];
-        $sUserAgente = $_SERVER['HTTP_USER_AGENT'];
-        $sIsca = $this->input->post("campo-isca");
-
-        if (!empty($sIp) AND ! empty($sUserAgente) AND empty($sIsca)) {
-            $vEmail = $this->session->userdata($sSessao);
-            if (empty($vEmail))
-                $vEmail = array('count' => 0, 'ip' => $sIp, 'timestamp' => time());
-
-            $vEmail['count'] ++;
-            $nTimestamp = time() - $vEmail['timestamp'];
-
-            if (($nTimestamp / (60 * 60)) > 1) // Se passar de 1h atualiza o contador para 0
-                $vEmail['count'] = 0;
-
-            $this->session->set_userdata($sSessao, $vEmail);
-            return $vEmail['count'] <= $nCount;
-        } else {
-            return false;
-        }
-    }
-
 }

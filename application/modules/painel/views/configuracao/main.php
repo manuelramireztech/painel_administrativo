@@ -26,7 +26,7 @@
             <div class="tab-pane active" id="tabs-geral">
                 <article class="media">
                     <div class="media-body">
-                        <?php echo form_open('painel/configuracao/save', 'class="form-horizontal form-validate" role="form"'); ?>
+                        <?php echo form_open('painel/configuracao', 'class="form-horizontal form-validate" role="form"'); ?>
                         <div class="form-group">
                             <label for="configuracao[EMAIL_CONTATO]" class="col-sm-2">E-mail de Contato no site: </label>
                             <div class="col-sm-10">
