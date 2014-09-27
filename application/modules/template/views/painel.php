@@ -145,7 +145,7 @@
             </nav>
 
             <section id='content'>
-                <div class='container'>
+                <div class='container-fluid'>
                     <div class='row' id='content-wrapper'>
                         <div class='col-xs-12'>
                             <div class='row'>
