@@ -151,8 +151,7 @@ if (!class_exists('my_form_validation')) {
                 $this->CI->db->where("deletado", 0);
 
             $query = $this->CI->db->get_where($table, array($field => $str), 1);
-            echo $this->CI->db->last_query();
-            exit;
+            
             return $query->num_rows() === 0;
         }
 
