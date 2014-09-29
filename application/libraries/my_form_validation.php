@@ -10,7 +10,7 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
 if (!class_exists('my_form_validation')) {
-    
+
     class my_form_validation extends CI_Form_validation {
 
         function __construct() {
@@ -36,7 +36,6 @@ if (!class_exists('my_form_validation')) {
         }
 
         public function date_br($sDate) {
-            $sDate = substr($sDate, 0, 10);// 00/00/0000
             list ( $nDia, $nMes, $nAno ) = explode('/', $sDate);
             return checkdate((INT) $nMes, (INT) $nDia, (INT) $nAno);
         }
@@ -104,11 +103,24 @@ if (!class_exists('my_form_validation')) {
         }
 
         public function is_unique_custom($str, $field) {
-            list($field, $param, $valor) = explode(',', $field);
-            list($table, $field) = explode('.', $field);
+            $nSeparador = substr_count($field, ',');
 
+            if ($nSeparador < 2)
+                return FALSE;
+
+            while ($nSeparador < 3) {
+                $field .= ",";
+                $nSeparador = substr_count($field, ',');
+            }
+
+            list($field, $param, $valor, $bDeletado) = explode(',', $field);
+            list($table, $field) = explode('.', $field);
+            
             if (!empty($param))
                 $this->CI->db->where($param . " !=", $valor);
+            
+            if (!empty($bDeletado))
+                $this->CI->db->where("deletado", 0);
 
             $query = $this->CI->db->limit(1)->get_where($table, array($field => $str));
             return $query->num_rows() === 0;
@@ -119,4 +131,5 @@ if (!class_exists('my_form_validation')) {
         }
 
     }
+
 }
