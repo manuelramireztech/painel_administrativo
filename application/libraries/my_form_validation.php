@@ -35,11 +35,25 @@ if (!class_exists('my_form_validation')) {
             $OBJ->_safe_form_data = $this->_safe_form_data;
         }
 
+        /**
+         * <p>Valida data no padrão dd/mm/yyyy</p>
+         * @example <p>$this->my_form_validation->set_rules('data_nascimento', 'Data de Nascimento', 'date_br');</p>
+         *
+         * @param	string data
+         * @return	bool 
+         */
         public function date_br($sDate) {
             list ( $nDia, $nMes, $nAno ) = explode('/', $sDate);
             return checkdate((INT) $nMes, (INT) $nDia, (INT) $nAno);
         }
 
+        /**
+         * <p>Valida CPF</p>
+         * @example <p>$this->my_form_validation->set_rules('cpf', 'CPF', 'cpf');</p>
+         *
+         * @param	string data
+         * @return	bool 
+         */
         public function cpf($sCpf) {
             $sCpf = preg_replace('/[.-]/', "", $sCpf);
             $proibidos = array('11111111111', '22222222222', '33333333333',
@@ -71,6 +85,13 @@ if (!class_exists('my_form_validation')) {
             }
         }
 
+        /**
+         * <p>Valida CNPJ</p>
+         * @example <p>$this->my_form_validation->set_rules('cnpj', 'CNPJ', 'cnpj');</p>
+         *
+         * @param	string data
+         * @return	bool 
+         */
         public function cnpj($sCnpj) {
             $sCnpj = preg_replace('/[.\/-]/', "", $sCnpj);
 
@@ -102,30 +123,48 @@ if (!class_exists('my_form_validation')) {
             return ($sum3 && $sCnpj[12] == ($sum1 < 2 ? 0 : 11 - $sum1) && $sCnpj[13] == ($sum2 < 2 ? 0 : 11 - $sum2)) ? $sCnpj : false;
         }
 
+        /**
+         * <p>Valida valor único no banco de dados</p>
+         * <p>Similar a validação <b>is_unique</b> padrão do codeigniter. A diferença está no segundo e terceiro parâmetro passado para consulta, onde o valor é validado no banco</p>
+         * @example <p>$this->my_form_validation->set_rules('login', 'Login', is_unique_custom[usuario.id,id,1]);</p><p>Resultado do Sql: SELECT * FROM `usuario` WHERE `id` != 1 AND `login` = 'administrador' LIMIT 1</p>
+         * @example <p>$this->my_form_validation->set_rules('login', 'Login', is_unique_custom[usuario.id,id,1,true]);</p><p>Resultado do Sql: SELECT * FROM `usuario` WHERE `id` != 1 AND `deletado` = 0 AND `login` = 'administrador' LIMIT 1</p>
+         *
+         * @param	string data
+         * @param	string data dividido em até 4 partes separados por vírgula [tabela.campo,campo para consulta,valor da consulta,true para considerar a exclusão lógica (não é obrigatório)]
+         * @return	bool 
+         */
         public function is_unique_custom($str, $field) {
             $nSeparador = substr_count($field, ',');
 
             if ($nSeparador < 2)
                 return FALSE;
-
-            while ($nSeparador < 3) {
+            elseif ($nSeparador < 3)
                 $field .= ",";
-                $nSeparador = substr_count($field, ',');
-            }
 
             list($field, $param, $valor, $bDeletado) = explode(',', $field);
             list($table, $field) = explode('.', $field);
-            
+
             if (!empty($param))
                 $this->CI->db->where($param . " !=", $valor);
-            
+
             if (!empty($bDeletado))
                 $this->CI->db->where("deletado", 0);
 
-            $query = $this->CI->db->limit(1)->get_where($table, array($field => $str));
+            $query = $this->CI->db->get_where($table, array($field => $str), 1);
+            echo $this->CI->db->last_query();
+            exit;
             return $query->num_rows() === 0;
         }
 
+        /**
+         * <p>Valida um conjunto de opções.</p>
+         * @example <p>$this->my_form_validation->set_rules('sexo', 'Sexo', 'opcoes[F,M]');</p>
+         * @example <p>$this->my_form_validation->set_rules('cor', 'Cor', 'opcoes[branco,verde,azul,amarelo,preto,laranja]');</p>
+         *
+         * @param	string data
+         * @param	string Opções separados por vírgula
+         * @return	bool 
+         */
         public function opcoes($str, $field) {
             return in_array($str, explode(',', $field));
         }
