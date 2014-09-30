@@ -126,8 +126,8 @@ if (!class_exists('my_form_validation')) {
         /**
          * <p>Valida valor único no banco de dados</p>
          * <p>Similar a validação <b>is_unique</b> padrão do codeigniter. A diferença está no segundo e terceiro parâmetro passado para consulta, onde o valor é validado no banco</p>
-         * @example <p>$this->my_form_validation->set_rules('login', 'Login', is_unique_custom[usuario.id,id,1]);</p><p>Resultado do Sql: SELECT * FROM `usuario` WHERE `id` != 1 AND `login` = 'administrador' LIMIT 1</p>
-         * @example <p>$this->my_form_validation->set_rules('login', 'Login', is_unique_custom[usuario.id,id,1,true]);</p><p>Resultado do Sql: SELECT * FROM `usuario` WHERE `id` != 1 AND `deletado` = 0 AND `login` = 'administrador' LIMIT 1</p>
+         * @example <p>$this->my_form_validation->set_rules('login', 'Login', is_unique_custom[usuario.login,id,1]);</p><p>Resultado do Sql: SELECT * FROM `usuario` WHERE `id` != 1 AND `login` = 'administrador' LIMIT 1</p>
+         * @example <p>$this->my_form_validation->set_rules('login', 'Login', is_unique_custom[usuario.login,id,1,true]);</p><p>Resultado do Sql: SELECT * FROM `usuario` WHERE `id` != 1 AND `deletado` = 0 AND `login` = 'administrador' LIMIT 1</p>
          *
          * @param	string data
          * @param	string data dividido em até 4 partes separados por vírgula [tabela.campo,campo para consulta,valor da consulta,true para considerar a exclusão lógica (não é obrigatório)]
