@@ -65,7 +65,7 @@ class main extends MY_Controller {
                 $this->session->set_userdata(array('painel' => $login));
                 $this->session->set_userdata('painel_nav', 1);
                 $this->sys_mensagem_model->setFlashData(3);
-                $this->usuario_model->saveLog('Login no Painel', array('id' => $oUsuario->id, 'nome' => $oUsuario->nome, 'email' => $oUsuario->email, 'id_grupo_usuario' => $oUsuario->id_grupo_usuario));
+                $this->log_model->saveLog(array('id' => $oUsuario->id, 'nome' => $oUsuario->nome, 'emil' => $oUsuario->email, 'id_grupo_usuario' => $oUsuario->id_grupo_usuario));
                 redirect('/painel', 'refresh');
             }
         } else {

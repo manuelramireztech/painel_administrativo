@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tempo de Geração: Set 10, 2014 as 10:41 PM
+-- Tempo de Geração: Nov 08, 2014 as 09:20 PM
 -- Versão do Servidor: 5.1.44
 -- Versão do PHP: 5.3.1
 
@@ -34,8 +34,11 @@ CREATE TABLE IF NOT EXISTS `sys_configuracao` (
 
 INSERT INTO `sys_configuracao` (`nome`, `valor`) VALUES
 ('EMAIL_CONTATO', ''),
+('EMAIL_FROM', ''),
+('EMAIL_FROM_NAME', ''),
 ('EMAIL_PASSWORD', ''),
 ('EMAIL_PORT', '587'),
+('EMAIL_SECURE', ''),
 ('EMAIL_SMTP', ''),
 ('EMAIL_USERNAME', ''),
 ('PAGSEGURO_EMAIL', NULL),
@@ -160,9 +163,11 @@ INSERT INTO `usu_metodo` (`id`, `modulo`, `classe`, `metodo`, `area`, `apelido`,
 (16, 'painel', 'usuario', 'remover', 'Usuário', 'Remover', 1, 0),
 (17, 'painel', 'usuario', 'adicionar', 'Usuário', 'Adicionar', 1, 0),
 (20, 'painel', 'usuario', 'meus_dados', 'Usuário', 'Meus Dados', 1, 1),
+(47, 'painel', 'permissoes', 'save', 'Permissões', 'Salvar', 1, 0),
 (48, 'painel', 'grupo_usuario', 'index', 'Grupo de Usuário', 'Visualizar', 1, 0),
 (49, 'painel', 'permissoes', 'index', 'Permissões', 'Visualizar', 1, 0),
 (50, 'painel', 'configuracao', 'index', 'Configuração', 'Visualizar', 1, 0),
+(51, 'painel', 'configuracao', 'save', 'Configuração', 'Salvar', 1, 0),
 (52, 'painel', 'grupo_usuario', 'adicionar', 'Grupo de Usuário', 'Adicionar', 1, 0),
 (54, 'painel', 'grupo_usuario', 'alterar', 'Grupo de Usuário', 'Alterar', 1, 0),
 (55, 'painel', 'grupo_usuario', 'remover', 'Grupo de Usuário', 'Remover', 1, 0),
@@ -198,9 +203,11 @@ INSERT INTO `usu_permissoes` (`id_metodo`, `id_grupo_usuario`) VALUES
 (17, 1),
 (20, 1),
 (20, 2),
+(47, 1),
 (48, 1),
 (49, 1),
 (50, 1),
+(51, 1),
 (52, 1),
 (54, 1),
 (55, 1);

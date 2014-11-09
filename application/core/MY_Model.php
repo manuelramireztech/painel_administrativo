@@ -130,14 +130,13 @@ class MY_Model extends CI_Model {
     }
 
     /**
-     * Realiza o INSERT na tabela $sTable e registra o LOG (usu_log)
+     * Realiza o INSERT na tabela $sTable
      *
      * @param	array Parâmetros de consulta (where)
      * @return	boolean
      */
     public function insert($vDados) {
         try {
-            $this->saveLog("Adicionar", $vDados);
             return $this->db->insert($this->sTable, $vDados);
         } catch (Exception $exc) {
             return false;
@@ -145,7 +144,7 @@ class MY_Model extends CI_Model {
     }
 
     /**
-     * Realiza o UPDATE na tabela $sTable e registra o LOG (usu_log)
+     * Realiza o UPDATE na tabela $sTable
      *
      * @param	array Parâmetros de consulta (where)
      * @param	string valor da coluna como parâmetro de alteração.
@@ -156,14 +155,6 @@ class MY_Model extends CI_Model {
      */
     public function update($vDados, $nId, $sCampo = 'id') {
         try {
-            $vRow = $this->db->where(array($sCampo => $nId))->get($this->sTable)->row_array(0);
-            $vLog = array();
-            foreach ($vDados as $sIndice => $sValor) {
-                if (isset($vRow[$sIndice]))
-                    $vLog[$sIndice] = "{$vRow[$sIndice]} => {$sValor}";
-            }
-
-            $this->saveLog("Alterar", $vLog);
             return $this->db->update($this->sTable, $vDados, array($sCampo => $nId));
         } catch (Exception $exc) {
             return false;
@@ -171,7 +162,7 @@ class MY_Model extends CI_Model {
     }
 
     /**
-     * Realiza o DELETE na tabela $sTable e registra o LOG (usu_log)
+     * Realiza o DELETE na tabela $sTable
      *
      * @param	string valor da coluna como parâmetro de exclusão.
      * @param	string Campo desejado como para alteração. Por padrão camo <b>"id"</b>
@@ -188,7 +179,7 @@ class MY_Model extends CI_Model {
     }
 
     /**
-     * <p>Realiza o UPDATE do campo <b>deletado</b> na tabela $sTable e registra o LOG (usu_log). Caso $bDeletado seja igual a FALSE o método delete() é chamado.</p>
+     * <p>Realiza o UPDATE do campo <b>deletado</b> na tabela $sTable. Caso $bDeletado seja igual a FALSE o método delete() é chamado.</p>
      * <p></p>
      *
      * @param	string valor da coluna como parâmetro de exclusão.
@@ -248,51 +239,6 @@ class MY_Model extends CI_Model {
 
         return (INT) $nValor;
     }
-
-    /**
-     * <p>Registra o LOG</p>
-     * <p>Também serão registrados os campos:</p>
-     * <p><b>acesso</b> (módulo, controller, method);</p>
-     * <p><b>id</b> do usuário caso esteja logado no painel; </p>
-     * <p><b>ip</b> IP de acesso <i>$this->input->ip_address()</i>; </p>
-     *
-     * @param	string Titulo do LOG
-     * @param	array Dados para registro do LOG
-     */
-    public function saveLog($sTitulo, $vDados) {
-        $vPainel = $this->session->userdata('painel');
-
-        if (!empty($vDados)) {
-            $sDescricao = "";
-
-            if (isset($vDados['senha']))
-                unset($vDados['senha']);
-
-            $vDados = array_filter($vDados);
-
-            if (!empty($vDados)) {
-                $this->load->helper('text');
-
-                foreach ($vDados as $sIndice => $sDados) {
-                    $sDados = character_limiter($sDados, 200);
-                    $sDescricao .= Util::trataNome($sIndice) . ": $sDados\n";
-                }
-
-                if (!empty($sDescricao)) {
-                    $vLog = array(
-                        'nome' => $sTitulo,
-                        'descricao' => $sDescricao,
-                        'acesso' => $this->router->fetch_module() . "/" . $this->router->class . "/" . $this->router->method,
-                        'id_usuario' => isset($vPainel['id']) ? $vPainel['id'] : NULL,
-                        'ip' => $this->input->ip_address(),
-                    );
-
-                    $this->db->insert('usu_log', $vLog);
-                }
-            }
-        }
-    }
-
 }
 
 ?>
