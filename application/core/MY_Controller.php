@@ -6,12 +6,12 @@
  * @link https://www.facebook.com/romabeckman
  * @link http://twitter.com/romabeckman
  */
-
 (defined('BASEPATH')) OR exit('No direct script access allowed');
 
 require_once APPPATH . 'interfaces/Crud_Painel.php';
 
 class MY_Controller extends CI_Controller {
+
     protected $_vPost, $_vGet, $_vPainel;
 
     function __construct() {
@@ -28,9 +28,11 @@ class MY_Controller extends CI_Controller {
         if (!isset($vars['title']))
             $vars['title'] = NOME_CLIENTE;
 
-        $vars['vPainel'] = $this->_vPainel;
+        $vars['_vPost'] = $this->_vPost;
+        $vars['_vGet'] = $this->_vGet;
+        $vars['_vPainel'] = $this->_vPainel;
         $vars['bPainelNav'] = $this->session->userdata('painel_nav');
-        $vars['vPainelPermissao'] = $this->metodo_model->getPermissao($vars['vPainel']['id_grupo_usuario']);
+        $vars['vPainelPermissao'] = $this->metodo_model->getPermissao($this->_vPainel['id_grupo_usuario']);
         $this->load->view($view, $vars, $return);
     }
 

@@ -13,7 +13,7 @@
 <div class="modal fade" id="modalFiltro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <?php echo form_open('painel/log/index', 'class="form-horizontal" role="form" method="get"'); ?>
+            <?php echo form_open('painel/log/index', 'class="form-horizontal" role="form" method="get"', array('filtro' => 1)); ?>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Filtro</h4>
@@ -47,8 +47,8 @@
                     <label for="data" class="col-sm-4">Data da Atividade: </label>
                     <div class="col-sm-8">
                         <div class="row">
-                            <div class="col-xs-6"><?php echo form_input('data_inicio', $this->input->get("data_inicio", true), 'id="data_inicio" class="datapicker form-control "'); ?></div>
-                            <div class="col-xs-6"><?php echo form_input('data_fim', $this->input->get("data_fim", true), 'id="data_fim" class="datapicker form-control "'); ?></div>
+                            <div class="col-xs-6"><?php echo form_input('data_inicio', $this->input->get("data_inicio", true), 'id="data_inicio" class="datepicker form-control "'); ?></div>
+                            <div class="col-xs-6"><?php echo form_input('data_fim', $this->input->get("data_fim", true), 'id="data_fim" class="datepicker form-control "'); ?></div>
                         </div>
                     </div>
                 </div>

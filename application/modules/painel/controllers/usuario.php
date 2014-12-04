@@ -86,8 +86,8 @@ class usuario extends MY_Controller implements Crud_Painel {
             return;
         }
 
-        $vPainel = $this->session->userdata('painel');
-        $data['usuario'] = $this->usuario_model->get($vPainel['id']);
+        $_vPainel = $this->session->userdata('painel');
+        $data['usuario'] = $this->usuario_model->get($_vPainel['id']);
         $data['conteudo'] = "usuario/meus_dados";
         $data['title'] = "Alterar meus dados de acesso";
         $this->loadTemplatePainel(NULL, $data);

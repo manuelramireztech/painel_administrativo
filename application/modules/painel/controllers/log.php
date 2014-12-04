@@ -20,7 +20,7 @@ class log extends MY_Controller {
     function index() {
         $data['conteudo'] = "log/main";
         $data['title'] = "Log";
-        if (isset($this->_vGet['ip'])) {
+        if (isset($this->_vGet['filtro'])) {
             $vFiltro = array(
                 "ip" => $this->_vGet['ip'],
                 "acesso" => $this->_vGet['acesso'],

@@ -80,7 +80,7 @@
                 <ul class='nav'>
                     <li class='dropdown dark user-menu'>
                         <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
-                            <span class='user-name'><?php echo $vPainel['nome']; ?></span>
+                            <span class='user-name'><?php echo $_vPainel['nome']; ?></span>
                             <b class='caret'></b>
                         </a>
                         <ul class='dropdown-menu'>
