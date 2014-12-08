@@ -1,4 +1,4 @@
-<?php echo form_open('painel/usuario/save_meus_dados', 'class="form-horizontal form-validate" id="form"'); ?>
+<?php echo form_open('painel/usuario/meus_dados', 'class="form-horizontal form-validate" id="form"'); ?>
 <div class="form-group">
     <label for="nome" class="col-sm-2">Nome: </label>
     <div class="col-sm-10">

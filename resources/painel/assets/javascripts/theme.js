@@ -481,13 +481,8 @@ var notify = false;
 
 
     this.setSelect2 = function (selector) {
-        if (selector == null) {
-            selector = $(".select2");
-        }
         if (jQuery().select2) {
-            return selector.each(function (i, elem) {
-                return $(elem).select2();
-            });
+            $("select").not("[multiple]").not(".no-select2").select2();
         }
     };
 

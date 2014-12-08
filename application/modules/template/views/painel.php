@@ -239,6 +239,9 @@
         <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/validate/additional-methods.min.js" type="text/javascript"></script>
         <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/validate/messages_pt_BR.js" type="text/javascript"></script>
 
+        <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/plugins/select2/select2.css" media="all" rel="stylesheet" type="text/css" />
+        <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/select2/select2.js" type="text/javascript"></script>
+
         <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/theme.js" type="text/javascript"></script>
     </body>
 </html>
