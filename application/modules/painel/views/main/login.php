@@ -8,27 +8,27 @@
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
 
-        <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/bootstrap/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
-        <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet" type="text/css" />
-        <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/theme-colors.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/bootstrap/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/light-theme.css" media="all" id="color-settings-body-color" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url(); ?>resources/painel/assets/stylesheets/theme-colors.css" media="all" rel="stylesheet" type="text/css" />
         <!--[if lt IE 9]>
           <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/ie/html5shiv.js" type="text/javascript"></script>
           <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/ie/respond.min.js" type="text/javascript"></script>
-        <![endif]-->
+          <![endif]-->
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+          <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
         <!--[if lt IE 9]>
           <script src="js/html5shiv.js"></script>
           <script src="js/respond.min.js"></script>
-        <![endif]-->
-    </head>
+          <![endif]-->
+      </head>
 
-    <body class='contrast-fb login contrast-background'>
+      <body class='contrast-fb login contrast-background'>
         <div class='middle-container'>
             <div class='middle-row'>
                 <div class='middle-wrapper'>
@@ -48,12 +48,22 @@
                             <div class='row'>
                                 <div class='col-sm-4 col-sm-offset-4'>
                                     <h1 class='text-center title'>Login</h1>
-
+                                    <?php
+                                    $sValidationError = validation_errors('<div>', '</div>');
+                                    if (!empty($sValidationError)) {
+                                        ?>
+                                        <div class="alert alert-danger">
+                                            <button class="close" data-dismiss="alert" type="button">×</button>
+                                            <?php echo $sValidationError; ?>
+                                        </div>
+                                        <?
+                                    }
+                                    ?>
                                     <?php $this->sys_mensagem_model->exibirMensagem(); ?>
                                     <?php echo form_open("painel/main/dologin", "class='form-validate'"); ?>
                                     <div class='form-group'>
                                         <div class='controls with-icon-over-input'>
-                                            <input value="" placeholder="Login" class="form-control" data-rule-required="true" name="user" type="text" />
+                                            <input value="<?php echo set_value('user') ?>" placeholder="Login" class="form-control" data-rule-required="true" name="user" type="text" />
                                             <i class='icon-user text-muted'></i>
                                         </div>
                                     </div>
@@ -81,7 +91,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Informe seu login para recuperar por e-mail sua senha.</p>
-                                                    <input type="text" name="user" required placeholder="Login" autocomplete="off" class="form-control placeholder-no-fix">
+                                                    <input type="text" name="user" value="<?php echo set_value('user') ?>" required placeholder="Login" autocomplete="off" class="form-control placeholder-no-fix">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
@@ -114,9 +124,7 @@
         <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/validate/jquery.validate.min.js" type="text/javascript"></script>
         <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/validate/additional-methods.min.js" type="text/javascript"></script>
         <script src="<?php echo base_url(); ?>resources/painel/assets/javascripts/plugins/validate/messages_pt_BR.js" type="text/javascript"></script>
-
-
     </body>
-</html>
+    </html>
 
 <!-- Localized -->

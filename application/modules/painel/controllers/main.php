@@ -43,34 +43,30 @@ class main extends MY_Controller {
 
     function dologin() {
         $this->load->library('encrypt');
-        $usuario = $this->input->post('user', true);
-        $senha = $this->input->post('pass', true);
+        $this->form_validation->set_rules('user', 'login', 'required');
+        $this->form_validation->set_rules('pass', 'Senha', 'required|callback_check_login_senha[' . $this->_vPost['user'] . ']');
 
-        if (!empty($usuario) AND ! empty($senha)) {
+        if ($this->form_validation->run()) {
+            $usuario = $this->input->post('user', true);
+            $senha = $this->input->post('pass', true);
             $oUsuario = $this->usuario_model->getLogin($usuario, $senha);
 
-            if (empty($oUsuario)) {
-                $this->sys_mensagem_model->setFlashData(4);
-                redirect('/painel/main/login', 'refresh');
-            } else {
-                $login = array(
-                    'id' => $oUsuario->id,
-                    'nome' => $oUsuario->nome,
-                    'email' => $oUsuario->email,
-                    'id_grupo_usuario' => $oUsuario->id_grupo_usuario,
-                    'logged' => 1,
-                    'datalogin' => date("Y-m-d h:i:s")
-                );
+            $login = array(
+                'id' => $oUsuario->id,
+                'nome' => $oUsuario->nome,
+                'email' => $oUsuario->email,
+                'id_grupo_usuario' => $oUsuario->id_grupo_usuario,
+                'logged' => 1,
+                'datalogin' => date("Y-m-d h:i:s")
+            );
 
-                $this->session->set_userdata(array('painel' => $login));
-                $this->session->set_userdata('painel_nav', 1);
-                $this->sys_mensagem_model->setFlashData(3);
-                $this->log_model->saveLog(array('id' => $oUsuario->id, 'nome' => $oUsuario->nome, 'emil' => $oUsuario->email, 'id_grupo_usuario' => $oUsuario->id_grupo_usuario));
-                redirect('/painel', 'refresh');
-            }
+            $this->session->set_userdata(array('painel' => $login));
+            $this->session->set_userdata('painel_nav', 1);
+            $this->sys_mensagem_model->setFlashData(3);
+            $this->log_model->saveLog(array('id' => $oUsuario->id, 'nome' => $oUsuario->nome, 'emil' => $oUsuario->email, 'id_grupo_usuario' => $oUsuario->id_grupo_usuario));
+            redirect('/painel', 'refresh');
         } else {
-            $this->sys_mensagem_model->setFlashData(6);
-            redirect('/painel/main/login', 'refresh');
+            $this->login();
         }
     }
     
@@ -80,7 +76,7 @@ class main extends MY_Controller {
     }
 
     function logout() {
-    	$this->session->unset_userdata('painel');
+        $this->session->unset_userdata('painel');
         redirect('/painel/main/login', 'refresh');
     }
 
@@ -114,4 +110,21 @@ class main extends MY_Controller {
         redirect('/painel/main/login', 'refresh');
     }
 
+    function check_login_senha($sSenhaInput, $sLogin) {
+        $sSenha = $this->usuario_model->getCampo(array('login' => $sLogin, 'ativo' => 1), 'senha');
+        
+        if (!empty($sSenha)) {
+            $sSenha = $this->encrypt->decode($sSenha);
+
+            if (strcmp($sSenha, $sSenhaInput) !== 0) {
+                $this->form_validation->set_message('check_login_senha', 'Senha informada não é válida.');
+                return FALSE;
+            }
+        } else {
+            $this->form_validation->set_message('check_login_senha', 'Login informado não existe.');
+            return FALSE;
+        }
+
+        return TRUE;
+    }
 }

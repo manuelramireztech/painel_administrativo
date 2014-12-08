@@ -89,7 +89,6 @@ class usuario_model extends MY_Model {
         $vReg = array(
             'nome' => $vDados["nome"],
             'login' => $vDados["login"],
-            'senha' => $vDados["senha"],
             'email' => $vDados["email"],
         );
 
