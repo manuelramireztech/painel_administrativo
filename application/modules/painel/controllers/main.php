@@ -19,8 +19,8 @@ class main extends MY_Controller {
     }
 
     public function index() {
-        $_vPainel = $this->session->userdata('painel');
-        if (empty($_vPainel)) {
+        $vPainel = $this->_vPainel;
+        if (empty($vPainel)) {
             redirect('/painel/main/login', 'refresh');
         } else {
             $data['conteudo'] = "main/main";
