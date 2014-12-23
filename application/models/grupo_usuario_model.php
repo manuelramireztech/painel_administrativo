@@ -37,6 +37,7 @@ class grupo_usuario_model extends MY_Model {
 
     public function save($vDados) {
         $vReg = array(
+            'id' => $this->uri->segment(4),
             'nome' => $vDados["nome"],
         );
 

@@ -70,6 +70,7 @@ class usuario_model extends MY_Model {
 
     public function save_meus_dados($vDados, $nIdUsuario) {
         $vReg = array(
+            'id' => $this->uri->segment(4),
             'nome' => $vDados["nome"],
             'login' => $vDados["login"],
             'email' => $vDados["email"],
