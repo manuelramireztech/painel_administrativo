@@ -239,6 +239,30 @@ class MY_Model extends CI_Model {
 
         return (INT) $nValor;
     }
+    
+    /**
+     * <p>Salva registro no banco com update ou insert.</p>
+     * @param	array Dados
+     * @param	string Campo na tabela de referência. Preferencialmente chave primária
+     */
+    function save($vDados, $sCampoReferencia = 'id') {
+        //UPDATE
+        if (isset($vDados[$sCampoReferencia]) AND ! empty($vDados[$sCampoReferencia])) {
+            if ($this->parcela_model->update($vDados, $vDados[$sCampoReferencia])) {
+                $this->sys_mensagem_model->setFlashData(9);
+            } else {
+                $this->sys_mensagem_model->setFlashData(2);
+            }
+        }
+        //INSERT
+        else {
+            if ($this->parcela_model->insert($vDados)) {
+                $this->sys_mensagem_model->setFlashData(9);
+            } else {
+                $this->sys_mensagem_model->setFlashData(2);
+            }
+        }
+    }
 }
 
 ?>

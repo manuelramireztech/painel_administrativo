@@ -52,7 +52,7 @@ class usuario_model extends MY_Model {
         return array('result' => $result, 'links' => $sLinks, 'total' => $nTotal);
     }
 
-    public function save($vDados, $sCampoReferencia = 'id') {
+    public function save($vDados) {
         $vReg = array(
             'id_grupo_usuario' => $vDados["id_grupo_usuario"],
             'nome' => $vDados["nome"],
@@ -62,27 +62,10 @@ class usuario_model extends MY_Model {
         );
 
         $this->load->library('encrypt');
-        //UPDATE
-        if (isset($vDados[$sCampoReferencia]) AND !empty($vDados[$sCampoReferencia])) {
-            if (!empty($vDados['senha']))
-                $vReg['senha'] = $this->encrypt->encode($vDados[$sCampoReferencia]);
-
-            if ($this->usuario_model->update($vReg, $vDados['id'])) {
-                $this->sys_mensagem_model->setFlashData(9);
-            } else {
-                $this->sys_mensagem_model->setFlashData(2);
-            }
-        }
-        //INSERT
-        else {
-            $vReg['senha'] = $this->encrypt->encode($vDados['senha']);
-
-            if ($this->usuario_model->insert($vReg)) {
-                $this->sys_mensagem_model->setFlashData(9);
-            } else {
-                $this->sys_mensagem_model->setFlashData(2);
-            }
-        }
+        if (!empty($vDados['senha']))
+            $vReg['senha'] = $this->encrypt->encode($vReg['senha']);
+        
+        parent::save($vReg);
     }
 
     public function save_meus_dados($vDados, $nIdUsuario) {
