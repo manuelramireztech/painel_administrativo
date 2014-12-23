@@ -248,7 +248,7 @@ class MY_Model extends CI_Model {
     function save($vDados, $sCampoReferencia = 'id') {
         //UPDATE
         if (isset($vDados[$sCampoReferencia]) AND ! empty($vDados[$sCampoReferencia])) {
-            if ($this->parcela_model->update($vDados, $vDados[$sCampoReferencia])) {
+            if ($this->update($vDados, $vDados[$sCampoReferencia])) {
                 $this->sys_mensagem_model->setFlashData(9);
                 return TRUE;
             } else {
@@ -257,7 +257,7 @@ class MY_Model extends CI_Model {
         }
         //INSERT
         else {
-            if ($this->parcela_model->insert($vDados)) {
+            if ($this->insert($vDados)) {
                 $this->sys_mensagem_model->setFlashData(9);
                 return TRUE;
             } else {
