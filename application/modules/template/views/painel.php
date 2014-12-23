@@ -28,6 +28,10 @@
             var nome_cliente = "<?php echo NOME_CLIENTE ?>";
             var title = "<?php echo $title ?>";
 
+            var modulo = "<?php echo $this->router->fetch_module() ?>";
+            var classe = "<?php echo $this->router->class ?>";
+            var method = "<?php echo $this->router->method ?>";
+
             $(function() {
                 $('#menu-navegacao ul.nav-stacked').each(function(indice, obj) {
                     if ($('li', obj).length == 0) {
@@ -110,7 +114,7 @@
                     <ul class='nav nav-stacked' id="menu-navegacao">
                         <li class="active"><a href="<?php echo base_url(); ?>painel"><i class="icon-home"></i> <span>Home</span></a></li>
                         <li>
-                            <a class="dropdown-collapse" href="javascript:;">
+                            <a class="dropdown-collapse" href="javascript:;" data-modulo="painel" data-class="grupo_usuario,usuario,configuracao,log,permissoes">
                                 <i class="icon-wrench"></i>
                                 <span>Administrar</span>
                                 <i class='icon-angle-down angle-down'></i>

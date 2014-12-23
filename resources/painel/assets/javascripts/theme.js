@@ -10,6 +10,33 @@ var notify = false;
 
 (function () {
     $(document).ready(function () {
+        $("#menu-navegacao > li > a").each(function () {
+            var vModulo = $(this).data("modulo");
+            var vClass = $(this).data("class");
+            var vMethod = $(this).data("method");
+            var bActive= false;
+
+            if (!empty(vModulo)) {
+                vModulo = vModulo.split(",");
+                if (!empty(vClass)) {
+                    vClass = vClass.split(",");
+
+                    if (!empty(vMethod)) {
+                        if ($.inArray(modulo, vModulo) !== -1 && $.inArray(classe, vClass) !== -1 && $.inArray(method, vMethod) !== -1)
+                            bActive = true;
+                    } else {
+                        if ($.inArray(modulo, vModulo) !== -1 && $.inArray(classe, vClass) !== -1)
+                            bActive = true;
+                    }
+                }
+            }
+
+            if (bActive === true) {
+                $(this).addClass('active');
+                $(this).parent().find('ul.nav').addClass('in');
+            }
+        });
+        
         var body, click_event, content, nav, nav_toggler;
         nav_toggler = $("header .toggle-nav");
         nav = $("#main-nav");
