@@ -250,6 +250,7 @@ class MY_Model extends CI_Model {
         if (isset($vDados[$sCampoReferencia]) AND ! empty($vDados[$sCampoReferencia])) {
             if ($this->parcela_model->update($vDados, $vDados[$sCampoReferencia])) {
                 $this->sys_mensagem_model->setFlashData(9);
+                return TRUE;
             } else {
                 $this->sys_mensagem_model->setFlashData(2);
             }
@@ -258,10 +259,13 @@ class MY_Model extends CI_Model {
         else {
             if ($this->parcela_model->insert($vDados)) {
                 $this->sys_mensagem_model->setFlashData(9);
+                return TRUE;
             } else {
                 $this->sys_mensagem_model->setFlashData(2);
             }
         }
+
+        return FALSE;
     }
 }
 
