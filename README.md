@@ -1,6 +1,8 @@
 Painel Administrativo com Codeigniter
 =====================
 
+Estrutura básica para início de projeto com 2 módulos básicos: Painel e Site. Painel para área Administrativa com template: http://www.bublinastudio.com/flattybs3/
+
 **Funcionalidades**
 
 1. Controle de Usuário;
