@@ -95,7 +95,7 @@ class usuario extends MY_Controller implements Crud_Painel {
 
     private function validation() {
         if (empty($this->_vPost))
-            return;
+            return FALSE;
 
         $this->my_form_validation->set_rules('id_grupo_usuario', 'Grupo usuário', 'required|max_length[10]');
         $this->my_form_validation->set_rules('nome', 'Nome', 'required|max_length[200]');
@@ -109,7 +109,7 @@ class usuario extends MY_Controller implements Crud_Painel {
     
     private function validation_meus_dados() {
         if (empty($this->_vPost))
-            return;
+            return FALSE;
 
         $this->my_form_validation->set_rules('nome', 'Nome', 'required|max_length[200]');
         $this->my_form_validation->set_rules('login', 'Login', 'required|max_length[100]');

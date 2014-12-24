@@ -41,7 +41,7 @@ class grupo_usuario_model extends MY_Model {
             'nome' => $vDados["nome"],
         );
 
-        parent::save($vReg);
+        return parent::save($vReg);
     }
 
 }

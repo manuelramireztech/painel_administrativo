@@ -78,7 +78,7 @@ class grupo_usuario extends MY_Controller implements Crud_Painel {
 
     private function validation() {
         if (empty($this->_vPost))
-            return;
+            return FALSE;
 
         $this->my_form_validation->set_rules('nome', 'Nome', 'required|max_length[45]');
         $this->my_form_validation->set_rules('deletado', 'Deletado', '');

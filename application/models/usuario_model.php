@@ -65,7 +65,7 @@ class usuario_model extends MY_Model {
         if (!empty($vDados['senha']))
             $vReg['senha'] = $this->encrypt->encode($vReg['senha']);
         
-        parent::save($vReg);
+        return parent::save($vReg);
     }
 
     public function save_meus_dados($vDados, $nIdUsuario) {
